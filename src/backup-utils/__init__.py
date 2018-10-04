@@ -1,7 +1,10 @@
 import json
+import subprocess
 
 from sys import argv
 from pathlib import Path
+
+from utils import which
 
 
 __VERSION__ = '0.1.1'
@@ -25,8 +28,19 @@ class Backup():
         cfg_file = self._ROOT / '.bak-utils.json'
         cfg_file.write_text(json.dumps(self._config, indent=4))
 
+    def _check(self):
+        borg_cmd = which(self._config.get('BORG_CMD', 'borg'))
+        if not borg_cmd:
+            raise ValueError("Can't fin borg binary")
+        else:
+            self._config['BORG_CMD'] = borg_cmd
+
     def run(self):
-        print('run')
+        self._check()
+        print(self._config['BORG_CMD'])
+        print(subprocess.run([self._config['BORG_CMD'], '--version'],
+                             check=True,
+                             stdout=subprocess.PIPE))
 
     def add_dir(self, dirs=[]):
         for d in dirs:

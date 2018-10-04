@@ -19,7 +19,6 @@ def main():
                         help=("Add a new directory to the backup list,"
                               " so next run it will be backup"))
     args = parser.parse_args()
-    print(args)
     bak = Backup()
     if args.dir:
         bak.add_dir(args.dir)
