@@ -1,0 +1,29 @@
+image: oprax/python:latest
+
+stages:
+  - build
+  - test
+
+build:pyz:
+  stage: build
+  artifacts:
+    name: "$CI_COMMIT_REF_SLUG"
+    paths:
+      - dist/backup-utils.pyz
+  before_script: mkdir dist
+  script: make build
+
+test:python3.5:
+  stage: test
+  image: oprax/python:3.5
+  script: make test
+
+test:python3.6:
+  stage: test
+  image: oprax/python:3.6
+  script: make test
+
+test:python3.7:
+  stage: test
+  image: oprax/python:3.7
+  script: make test

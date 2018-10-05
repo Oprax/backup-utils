@@ -5,3 +5,6 @@ build: ./src/backup-utils/__main__.py
 
 run: build
 	pipenv run python ./dist/backup-utils.pyz
+
+test: build
+	pipenv run python ./dist/backup-utils.pyz
