@@ -6,5 +6,6 @@ name = "pypi"
 [packages]
 
 [dev-packages]
+black = "*"
 "flake8" = "*"
 pylint = "*"

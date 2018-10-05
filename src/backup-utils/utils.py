@@ -1,4 +1,5 @@
 import os
+import socket
 
 
 def which(program):
@@ -16,3 +17,10 @@ def which(program):
                 return exe_file
 
     return None
+
+
+def hostname():
+    if socket.gethostname().find(".") >= 0:
+        return socket.gethostname()
+    else:
+        return socket.gethostbyaddr(socket.gethostname())[0]
