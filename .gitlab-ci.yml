@@ -16,8 +16,7 @@ build:pyz:
 
 .test_template:
   before_script:
-    - pip install pip==18.0
-    - pipenv install pip==18.0 # temp: fix for https://github.com/pypa/pipenv/issues/2924
+    - pip install pip==18.0 # temp: fix for https://github.com/pypa/pipenv/issues/2924
     - pipenv lock --pre
     - pipenv install --dev
   script: make test
