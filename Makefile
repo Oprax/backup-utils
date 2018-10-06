@@ -1,10 +1,10 @@
 .PHONY: build run
 
-build: ./src/backup-utils/__main__.py
-	pipenv run python -m zipapp -o ./dist/backup-utils.pyz ./src/backup-utils
+build: ./src/backup_utils/__main__.py
+	pipenv run python -m zipapp -o ./dist/backup_utils.pyz ./src/backup_utils
 
 run: build
-	pipenv run python ./dist/backup-utils.pyz
+	pipenv run python ./dist/backup_utils.pyz
 
-test: build
-	pipenv run python ./dist/backup-utils.pyz
+test:
+	PYTHONPATH="${PYTHONPATH}:${PWD}/src" pipenv run pytest

@@ -6,12 +6,11 @@ import subprocess
 from email.mime.application import MIMEApplication
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-from email.message import EmailMessage
 from sys import argv
 from datetime import date
 from pathlib import Path
 
-from utils import which, hostname
+from .utils import which, hostname
 
 
 __VERSION__ = "0.2.0"

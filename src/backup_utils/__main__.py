@@ -1,8 +1,6 @@
 import argparse
 
-from pathlib import Path
-
-from __init__ import __VERSION__, Backup
+from .__init__ import __VERSION__, Backup
 
 
 def main():
