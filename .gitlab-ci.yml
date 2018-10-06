@@ -1,8 +1,8 @@
 image: oprax/python:latest
 
 stages:
-  - build
   - test
+  - build
 
 build:pyz:
   stage: build
@@ -10,20 +10,28 @@ build:pyz:
     name: "$CI_COMMIT_REF_SLUG"
     paths:
       - dist/backup-utils.pyz
-  before_script: mkdir dist
+  before_script:
+    - mkdir dist
   script: make build
+
+.test_template:
+  before_script:
+    - pipenv install --dev
+    - pipenv lock --pre
+    - pipenv install --dev
+  script: make test
 
 test:python3.5:
   stage: test
   image: oprax/python:3.5
-  script: make test
+  extends: .test_template
 
 test:python3.6:
   stage: test
   image: oprax/python:3.6
-  script: make test
+  extends: .test_template
 
 test:python3.7:
   stage: test
   image: oprax/python:3.7
-  script: make test
+  extends: .test_template
