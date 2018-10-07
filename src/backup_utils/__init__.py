@@ -14,7 +14,7 @@ from gzip import compress
 from .utils import which, hostname
 
 
-__VERSION__ = "0.3.0"
+__VERSION__ = "0.4.0"
 __AUTHOR__ = "Oprax <oprax@me.com>"
 
 
@@ -137,7 +137,7 @@ class Backup:
     def _rclone(self):
         dist = self._config.get("rclone", {}).get("dist", "")
         dist = dist.format(hostname=hostname(), date=date.today())
-        rclone_cmds = [self._rclone_cmd, "-v", "sync", self._repo, dist]
+        rclone_cmds = [self._rclone_cmd, "-v", "sync", str(self._repo), dist]
         self._run_cmd(rclone_cmds)
 
     def notify(self, err, attachments={}):
