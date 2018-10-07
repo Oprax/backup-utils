@@ -9,11 +9,12 @@ from email.mime.text import MIMEText
 from sys import argv
 from datetime import date
 from pathlib import Path
+from gzip import compress
 
 from .utils import which, hostname
 
 
-__VERSION__ = "0.2.0"
+__VERSION__ = "0.3.0"
 __AUTHOR__ = "Oprax <oprax@me.com>"
 
 
@@ -37,7 +38,7 @@ class Backup:
 
     def _run_cmd(self, cmds, env=None):
         try:
-            subprocess.run(
+            return subprocess.run(
                 cmds,
                 env=env,
                 check=True,
@@ -64,6 +65,48 @@ class Backup:
         self._rclone_cmd = which(self._config.get("rclone", {}).get("cmd", "rclone"))
         if not self._rclone_cmd:
             raise ValueError("Can't find rclone binary")
+        self._mysqldump_cmd = which(
+            self._config.get("database", {}).get("cmd", "mysqldump")
+        )
+        if not self._mysqldump_cmd:
+            raise ValueError("Can't find mysqldump binary")
+
+    def _database(self):
+        extra_file = (
+            Path(self._config.get("database", {}).get("extra_file", "~/.my.cnf"))
+            .expanduser()
+            .resolve()
+        )
+        if not extra_file.exists():
+            raise ValueError("'{}' file don't exist !".format(extra_file))
+        bak_dir = (
+            Path(self._config.get("database", {}).get("backup_directory", ""))
+            .expanduser()
+            .resolve()
+        )
+        if not bak_dir.exists():
+            raise ValueError("'{}' directory don't exist !".format(bak_dir))
+        self.add_dir([bak_dir])
+        now = str(date.today())
+        for db in self._config.get("database", {}).get("database", []):
+            bak_name = "{database}-{date}.sql.gz".format(database=db, date=now)
+            bak_file = bak_dir / bak_name
+            cmds = [
+                self._mysqldump_cmd,
+                "--defaults-extra-file={}".format(str(extra_file)),
+                "-u",
+                self._config.get("database", {}).get("user", "root"),
+                "--single-transaction",
+                "--quick",
+                "--lock-tables={}".format(
+                    str(
+                        self._config.get("database", {}).get("lock_tables", False)
+                    ).lower()
+                ),
+                db
+            ]
+            proc = self._run_cmd(cmds)
+            bak_file.write_bytes(compress(proc.stdout))
 
     def _borg(self):
         borg_env = os.environ.copy()
@@ -87,9 +130,7 @@ class Backup:
 
         prune_cmds = [self._borg_cmd, "prune", "-v", "::"]
         prune_cmds.extend(
-            self._config.get("borg", {}).get(
-                "prune", ["-d", "7", "-w", "4", "-m", "3", "-y", "1"]
-            )
+            self._config.get("borg", {}).get("prune", "-d 7 -w 4 -m 3 -y 1").split(" ")
         )
         self._run_cmd(prune_cmds, env=borg_env)
 
@@ -131,6 +172,8 @@ class Backup:
 
     def run(self):
         self._check()
+        if self._config.get("database", None):
+            self._database()
         self._borg()
         self._rclone()
 

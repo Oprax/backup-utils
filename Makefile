@@ -1,7 +1,7 @@
 .PHONY: build run
 
-build: ./src/backup_utils/__main__.py
-	pipenv run python -m zipapp -o ./dist/backup_utils.pyz ./src/backup_utils
+build: ./src/__main__.py
+	pipenv run python -m zipapp -p python3 -o ./dist/backup_utils.pyz ./src
 
 run: build
 	pipenv run python ./dist/backup_utils.pyz

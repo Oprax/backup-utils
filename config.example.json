@@ -1,0 +1,31 @@
+{
+    "directories": [],
+    "repo": "/home/backup/repo",
+    "borg": {
+        "cmd": "borg",
+        "pswd": "password",
+        "compression": "lzma",
+        "prune": "-d 7 -w 4 -m 3 -y 1"
+    },
+    "rclone": {
+        "cmd": "rclone",
+        "dist": "s3-backup:backup/{hostname}"
+    },
+    "email": {
+        "subject": "Panic at {hostname}",
+        "from": "backup@mg.example.org",
+        "to": "postmaster@mg.example.org",
+        "host": "smtp.mailgun.org",
+        "port": 587,
+        "login": "postmaster@mg.example.org",
+        "pswd": "password"
+    },
+    "database": {
+        "cmd": "mysqldump",
+        "user": "root",
+        "extra_file": "~/.my.cnf",
+        "backup_directory": "/home/backup/databases",
+        "lock_tables": false,
+        "database": []
+    }
+}

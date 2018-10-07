@@ -1,6 +1,6 @@
 import argparse
 
-from .__init__ import __VERSION__, Backup
+from backup_utils import __VERSION__, Backup
 
 
 def main():
