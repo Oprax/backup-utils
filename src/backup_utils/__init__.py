@@ -1,5 +1,4 @@
 import json
-import os
 import smtplib
 import subprocess
 
@@ -11,10 +10,11 @@ from datetime import date
 from pathlib import Path
 from gzip import compress
 
+from .Task import BorgTask, RcloneTask
 from .utils import which, hostname
 
 
-__VERSION__ = "0.4.0"
+__VERSION__ = "0.5.0"
 __AUTHOR__ = "Oprax <oprax@me.com>"
 
 
@@ -37,19 +37,9 @@ class Backup:
         self._cfg_file.write_text(json.dumps(self._config, indent=4))
 
     def _run_cmd(self, cmds, env=None):
-        try:
-            return subprocess.run(
-                cmds,
-                env=env,
-                check=True,
-                stdout=subprocess.PIPE,
-                stderr=subprocess.PIPE,
-            )
-        except subprocess.CalledProcessError as e:
-            err = "Process fail, command : '{}'".format(" ".join(cmds))
-            files = {"stdout.log": e.stdout, "stderr.log": e.stderr}
-            self.notify(err, attachments=files)
-            raise
+        return subprocess.run(
+            cmds, env=env, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE
+        )
 
     def _check(self):
         self._repo = Path(self._config.get("repo", ""))
@@ -103,42 +93,27 @@ class Backup:
                         self._config.get("database", {}).get("lock_tables", False)
                     ).lower()
                 ),
-                db
+                db,
             ]
             proc = self._run_cmd(cmds)
             bak_file.write_bytes(compress(proc.stdout))
 
     def _borg(self):
-        borg_env = os.environ.copy()
-        borg_env["BORG_PASSPHRASE"] = self._config.get("borg", {}).get("pswd", "")
-        borg_env["BORG_REPO"] = str(self._repo)
-
-        compression = self._config.get("borg", {}).get("compression", "lzma")
-        bak_name = "::{name}-{date}".format(name=hostname(), date=date.today())
-        borg_cmds = [
-            self._borg_cmd,
-            "create",
-            "-v",
-            "--stats",
-            "--compression",
-            compression,
-            "--exclude-caches",
-            bak_name,
-        ]
-        borg_cmds.extend(set(self._config.get("directories", [])))
-        self._run_cmd(borg_cmds, env=borg_env)
-
-        prune_cmds = [self._borg_cmd, "prune", "-v", "::"]
-        prune_cmds.extend(
-            self._config.get("borg", {}).get("prune", "-d 7 -w 4 -m 3 -y 1").split(" ")
+        borg = BorgTask(
+            self._config.get("borg", {}).get("cmd", "borg"),
+            directories=self._config.get("directories", []),
+            repo=str(self._repo),
+            **self._config.get("borg", {})
         )
-        self._run_cmd(prune_cmds, env=borg_env)
+        borg.run()
 
     def _rclone(self):
-        dist = self._config.get("rclone", {}).get("dist", "")
-        dist = dist.format(hostname=hostname(), date=date.today())
-        rclone_cmds = [self._rclone_cmd, "-v", "sync", str(self._repo), dist]
-        self._run_cmd(rclone_cmds)
+        rclone = RcloneTask(
+            self._config.get("rclone", {}).get("cmd", "rclone"),
+            repo=str(self._repo),
+            **self._config.get("rclone", {})
+        )
+        rclone.run()
 
     def notify(self, err, attachments={}):
         print(err, attachments)
@@ -166,16 +141,24 @@ class Backup:
             self._config.get("email", {}).get("login"),
             self._config.get("email", {}).get("pswd"),
         )
-        Path(self._ROOT / "panic.msg").write_text(msg.as_string())
         s.sendmail(msg["From"], msg["To"], msg.as_string())
         s.quit()
 
     def run(self):
-        self._check()
-        if self._config.get("database", None):
-            self._database()
-        self._borg()
-        self._rclone()
+        try:
+            self._check()
+            if self._config.get("database", None):
+                self._database()
+            self._borg()
+            self._rclone()
+        except subprocess.CalledProcessError as e:
+            err = "Process fail, command : '{}'".format(" ".join(e.cmd))
+            files = {"stdout.log": e.stdout, "stderr.log": e.stderr}
+            self.notify(err, attachments=files)
+            raise
+        except Exception as e:
+            self.notify(str(e))
+            raise
 
     def add_dir(self, dirs=[]):
         for d in dirs:
