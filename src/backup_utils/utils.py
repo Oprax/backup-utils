@@ -1,6 +1,8 @@
 import os
 import socket
 
+from datetime import date
+
 
 def which(program):
     def is_exe(fpath):
@@ -24,3 +26,7 @@ def hostname():
         return socket.gethostname()
     else:
         return socket.gethostbyaddr(socket.gethostname())[0]
+
+
+def render(template):
+    return template.format(hostname=hostname(), date=date.today())

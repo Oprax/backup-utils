@@ -1,17 +1,20 @@
 {
     "directories": [],
     "repo": "/home/backup/repo",
-    "borg": {
+    "backup": {
         "cmd": "borg",
+        "driver": "borg",
         "pswd": "password",
         "compression": "lzma",
         "prune": "-d 7 -w 4 -m 3 -y 1"
     },
-    "rclone": {
+    "sync": {
         "cmd": "rclone",
+        "driver": "rclone",
         "dist": "s3-backup:backup/{hostname}"
     },
-    "email": {
+    "notifier": {
+        "driver": "email",
         "subject": "Panic at {hostname}",
         "from": "backup@mg.example.org",
         "to": "postmaster@mg.example.org",
