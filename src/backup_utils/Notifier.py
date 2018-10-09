@@ -31,8 +31,7 @@ class EmailNotifier(Notifier):
             msg.attach(part)
 
         s = smtplib.SMTP(
-            self._config.get("host", "smtp." + hname),
-            self._config.get("port", 587),
+            self._config.get("host", "smtp." + hname), self._config.get("port", 587)
         )
 
         s.login(

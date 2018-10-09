@@ -45,9 +45,7 @@ class Backup:
         self._config.get("directories", []).append(task.backup_dir)
 
     def _backup(self):
-        driver = tasks(
-            task_name=self._config.get("backup", {}).get("driver", "Borg")
-        )
+        driver = tasks(task_name=self._config.get("backup", {}).get("driver", "Borg"))
         task = driver(
             self._config.get("backup", {}).get("cmd", "borg"),
             directories=self._config.get("directories", []),
@@ -57,9 +55,7 @@ class Backup:
         task.start()
 
     def _sync(self):
-        driver = tasks(
-            task_name=self._config.get("sync", {}).get("driver", "Rclone")
-        )
+        driver = tasks(task_name=self._config.get("sync", {}).get("driver", "Rclone"))
         task = driver(
             self._config.get("sync", {}).get("cmd", "rclone"),
             repo=str(self._repo),
