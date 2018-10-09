@@ -80,9 +80,10 @@ class Backup:
             raise
 
     def notify(self, err, attachments={}):
-        notifier = notifiers(
+        driver = notifiers(
             task_name=self._config.get("notifier", {}).get("driver", "print")
         )
+        notifier = driver()
         notifier.send(err, attachments)
 
     def add_dir(self, dirs=[]):

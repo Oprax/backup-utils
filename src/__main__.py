@@ -10,6 +10,11 @@ def main():
     )
     parser.add_argument("-r", "--run", action="store_true", help="Create a new backup")
     parser.add_argument(
+        "--test-notifier",
+        action="store_true",
+        help="Send a notification to test notifier settings",
+    )
+    parser.add_argument(
         "-d",
         "--dir",
         required=False,
@@ -20,6 +25,11 @@ def main():
     bak = Backup()
     if args.dir:
         bak.add_dir(args.dir)
+    elif args.test_notifier:
+        bak.notify(
+            "Hi, your notifier settings is working !",
+            attachments={"test.log": b"this is a test"},
+        )
     else:
         bak.run()
 
