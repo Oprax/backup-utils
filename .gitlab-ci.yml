@@ -9,7 +9,7 @@ build:pyz:
   artifacts:
     name: "$CI_COMMIT_REF_SLUG"
     paths:
-      - dist/backup-utils.pyz
+      - dist/backup_utils.pyz
   before_script:
     - mkdir dist
   script: make build
