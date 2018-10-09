@@ -1,6 +1,11 @@
 Backup Utils
 ============
 
+
+[![pipeline status](https://gitlab.com/Oprax/backup-utils/badges/master/pipeline.svg)](https://gitlab.com/Oprax/backup-utils/commits/master)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
+
+
 The goal of the project is to simplify backup creation. 
 At the beggining it's using [BorgBackup](https://www.borgbackup.org/) and [Rclone](https://rclone.org).
 Now you can extend it !
