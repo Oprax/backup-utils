@@ -20,6 +20,13 @@ setuptools.setup(
     entry_points={"console_scripts": ["backup-utils = backup_utils:main"]},
     classifiers=[
         "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.5",
+        "Programming Language :: Python :: 3.6",
+        "Programming Language :: Python :: 3.7",
         "License :: OSI Approved :: MIT License",
+        "Development Status :: 3 - Alpha",
+        "Environment :: Console",
+        "Topic :: System :: Archiving :: Backup",
+        "Intended Audience :: System Administrators",
     ],
 )

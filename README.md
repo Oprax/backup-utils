@@ -3,6 +3,9 @@ Backup Utils
 
 
 [![pipeline status](https://gitlab.com/Oprax/backup-utils/badges/master/pipeline.svg)](https://gitlab.com/Oprax/backup-utils/commits/master)
+[![PyPI - License](https://img.shields.io/pypi/l/backup-utils.svg)](https://gitlab.com/Oprax/backup-utils/blob/master/LICENSE)
+[![PyPI](https://img.shields.io/pypi/v/backup-utils.svg)](https://pypi.org/project/backup-utils/)
+[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/backup-utils.svg)](https://pypi.org/project/backup-utils/)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
 
 
@@ -12,7 +15,19 @@ Now you can extend it !
 
 # 1. Installation
 
-`make build` and get the the pyz file into dist/
+You can use pip
+
+```bash
+pip install backup-utils
+```
+
+You can build the project yourself:
+
+```bash
+git clone https://gitlab.com/Oprax/backup-utils.git
+cd backup-utils
+make build # will produce a `dist/backup_utils.pyz` file
+```
 
 # 2. Usage
 
@@ -20,8 +35,8 @@ There are two commands.
 The first one is for is for add directory to configuration file which would be backup is the next time.
 
 ```bash
-dist/backup_utils.pyz -d /an/absolute/path -d ./a/relative/path
-dist/backup_utils.pyz --dir ~/user/path
+backup-utils -d /an/absolute/path -d ./a/relative/path
+backup-utils --dir ~/user/path
 ```
 
 It is usefull because this command will resolve the path for to have an absolute path.
@@ -29,9 +44,9 @@ It is usefull because this command will resolve the path for to have an absolute
 Ths seconds command is the command to run a backup :
 
 ```bash
-dist/backup_utils.pyz --run # the long one
-dist/backup_utils.pyz -r # the shortcut
-dist/backup_utils.pyz # `run` is the default command if there are no argument
+backup-utils --run # the long one
+backup-utils -r # the shortcut
+backup-utils # `run` is the default command if there are no argument
 ```
 
 # 3. Configuration
