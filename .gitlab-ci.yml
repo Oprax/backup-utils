@@ -3,8 +3,9 @@ image: oprax/python:latest
 stages:
   - test
   - build
+  - deploy
 
-build:pyz:
+pyz:
   stage: build
   artifacts:
     name: "$CI_COMMIT_REF_SLUG"
@@ -20,17 +21,25 @@ build:pyz:
     - pipenv install --dev
   script: make test
 
-test:python3.5:
+python3.5:
   stage: test
   image: oprax/python:3.5
   extends: .test_template
 
-test:python3.6:
+python3.6:
   stage: test
   image: oprax/python:3.6
   extends: .test_template
 
-test:python3.7:
+python3.7:
   stage: test
   image: oprax/python:3.7
   extends: .test_template
+
+pypi:
+  stage: deploy
+  only:
+   - master
+  before_script:
+   - pipenv install --dev
+  script: make upload
