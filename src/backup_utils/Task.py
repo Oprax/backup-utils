@@ -8,11 +8,14 @@ __all__ = ["Task", "BorgTask", "RcloneTask", "_tasks"]
 
 class Task(object):
     """
-    Parent Task class, if you create a Task, you class must be a children of this class.
+    Parent Task class,
+    if you create a Task, you class must be a children of this class.
     """
+
     def __init__(self, cmd, **kwargs):
         """
-        Create a Task object, take the binary command and multiple other params use as config.
+        Create a Task object,
+        take the binary command and multiple other params use as config.
 
         :param cmd: the command (without arguments), will be pass throug which
         :param kwargs: Other params that will be use for the configuration.
@@ -85,6 +88,7 @@ class BorgTask(Task):
 
     .. seealso:: Task()
     """
+
     def _run(self):
         """
         Create a new environment to pass repo path and password to backup.
@@ -120,6 +124,7 @@ class RcloneTask(Task):
 
     .. seealso:: Task()
     """
+
     def _run(self):
         """
         Synchronize using repo.

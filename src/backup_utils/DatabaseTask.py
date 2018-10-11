@@ -6,7 +6,20 @@ from .Task import Task
 
 
 class DatabaseTask(Task):
+    """
+    Parent DatabaseTask class, if you create a DatabaseTask,
+    you class must be a children of this class.
+    This class is a child of `Task`.
+
+    .. seealso:: Task()
+    """
+
     def start(self):
+        """
+        Test if the directory to backup database file exist.
+
+        .. seealso:: Task.start()
+        """
         self._bak_dir = (
             Path(self._config.get("backup_directory", "")).expanduser().resolve()
         )
@@ -16,11 +29,24 @@ class DatabaseTask(Task):
 
     @property
     def backup_dir(self):
+        """
+        Return the directory containing database backup.
+
+        :return: Directory containing database backup.
+        :rtype: str
+        """
         return str(self._bak_dir)
 
 
 class MysqlTask(DatabaseTask):
+    """
+    Mysql driver for DatabaseTask.
+    """
+
     def _run(self):
+        """
+        Create a backup of databe in mysql using mysqldump
+        """
         extra_file = (
             Path(self._config.get("extra_file", "~/.my.cnf")).expanduser().resolve()
         )
