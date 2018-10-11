@@ -22,6 +22,7 @@ def which(program):
     >>> which("ls")
     /bin/ls
     """
+
     def is_exe(fpath):
         return os.path.isfile(fpath) and os.access(fpath, os.X_OK)
 
@@ -62,7 +63,18 @@ def render(template):
     :rtype: str
 
     :Example:
-    
     >>> render("machine-{hostname}-{date}")
     """
     return template.format(hostname=hostname(), date=date.today())
+
+
+def factory(class_name="", _from={}):
+    """
+    Return class object depending the name.
+
+    :param class_name: ID of the Task, not case sensitive.
+    :param _from: Dict with str name as key and Class as value.
+    :type class_name: str
+    :type _from: dict
+    """
+    return _from[class_name.lower()]

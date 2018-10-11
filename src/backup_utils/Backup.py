@@ -4,9 +4,11 @@ import subprocess
 from sys import argv
 from pathlib import Path
 
-from .Task import factory as tasks
-from .DatabaseTask import factory as databases
-from .Notifier import factory as notifiers
+from .utils import factory
+
+from .Task import _tasks as tasks
+from .DatabaseTask import _tasks as databases
+from .Notifier import _tasks as notifiers
 
 
 class Backup:
@@ -57,8 +59,9 @@ class Backup:
         """
         Fecth the database driver and launch the task.
         """
-        driver = databases(
-            task_name=self._config.get("database", {}).get("driver", "mysql")
+        driver = factory(
+            class_name=self._config.get("database", {}).get("driver", "mysql"),
+            _from=databases,
         )
         task = driver(
             self._config.get("database", {}).get("cmd", "mysqldump"),
@@ -72,7 +75,9 @@ class Backup:
         """
         Fecth the backup driver and launch the task.
         """
-        driver = tasks(task_name=self._config.get("backup", {}).get("driver", "Borg"))
+        driver = factory(
+            class_name=self._config.get("backup", {}).get("driver", "Borg"), _from=tasks
+        )
         task = driver(
             self._config.get("backup", {}).get("cmd", "borg"),
             directories=self._config.get("directories", []),
@@ -85,7 +90,9 @@ class Backup:
         """
         Fecth the sync driver and launch the task.
         """
-        driver = tasks(task_name=self._config.get("sync", {}).get("driver", "Rclone"))
+        driver = factory(
+            class_name=self._config.get("sync", {}).get("driver", "Rclone"), _from=tasks
+        )
         task = driver(
             self._config.get("sync", {}).get("cmd", "rclone"),
             repo=str(self._repo),
@@ -124,8 +131,9 @@ class Backup:
         :type msg: str
         :type attachments: dict
         """
-        driver = notifiers(
-            task_name=self._config.get("notifier", {}).get("driver", "print")
+        driver = factory(
+            class_name=self._config.get("notifier", {}).get("driver", "print"),
+            _from=notifiers,
         )
         notifier = driver()
         notifier.send(msg, attachments)

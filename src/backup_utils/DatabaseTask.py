@@ -29,7 +29,7 @@ class MysqlTask(DatabaseTask):
         now = str(date.today())
         for db in self._config.get("database", []):
             bak_name = "{database}-{date}.sql.gz".format(database=db, date=now)
-            bak_file = self._bak_dir / bak_name
+            bak_file = Path(self.backup_dir) / bak_name
             cmds = [
                 self._cmd,
                 "--defaults-extra-file={}".format(str(extra_file)),
@@ -47,7 +47,3 @@ class MysqlTask(DatabaseTask):
 
 
 _tasks = {"database": DatabaseTask, "mysql": MysqlTask}
-
-
-def factory(task_name="Mysql"):
-    return _tasks[task_name.lower()]

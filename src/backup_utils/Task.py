@@ -3,7 +3,7 @@ from os import environ
 from .utils import which, render
 
 
-__all__ = ["Task", "BorgTask", "RcloneTask", "factory"]
+__all__ = ["Task", "BorgTask", "RcloneTask", "_tasks"]
 
 
 class Task(object):
@@ -131,13 +131,3 @@ class RcloneTask(Task):
 
 
 _tasks = {"task": Task, "borg": BorgTask, "rclone": RcloneTask}
-
-
-def factory(task_name="Task"):
-    """
-    Return task object depending the name.
-
-    :param task_name: ID of the Task, not case sensitive
-    :type task_name: str
-    """
-    return _tasks[task_name.lower()]

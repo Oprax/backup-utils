@@ -1,4 +1,4 @@
-import smtplib
+from smtplib import SMTP
 from email.mime.application import MIMEApplication
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
@@ -10,8 +10,9 @@ class Notifier(object):
     def __init__(self, **kwargs):
         self._config = kwargs
 
-    def send(self, err, attachments={}):
+    def send(self, msg, attachments={}):
         print(err, attachments)
+        print(msg, attachments)
 
 
 class EmailNotifier(Notifier):
@@ -23,14 +24,14 @@ class EmailNotifier(Notifier):
         msg["From"] = self._config.get("from", "backup@" + hname)
         msg["To"] = self._config.get("to", "postmaster@" + hname)
 
-        msg.attach(MIMEText(err))
+        msg.attach(MIMEText(msg))
 
         for name, data in attachments.items():
             part = MIMEApplication(data, Name=name)
             part["Content-Disposition"] = 'attachment; filename="{}"'.format(name)
             msg.attach(part)
 
-        s = smtplib.SMTP(
+        s = SMTP(
             self._config.get("host", "smtp." + hname), self._config.get("port", 587)
         )
 
@@ -43,7 +44,3 @@ class EmailNotifier(Notifier):
 
 
 _tasks = {"print": Notifier, "email": EmailNotifier}
-
-
-def factory(task_name="print"):
-    return _tasks[task_name.lower()]
