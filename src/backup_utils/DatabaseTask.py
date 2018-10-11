@@ -20,7 +20,7 @@ class DatabaseTask(Task):
 
 
 class MysqlTask(DatabaseTask):
-    def run(self):
+    def _run(self):
         extra_file = (
             Path(self._config.get("extra_file", "~/.my.cnf")).expanduser().resolve()
         )
