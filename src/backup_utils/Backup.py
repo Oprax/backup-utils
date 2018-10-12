@@ -123,7 +123,7 @@ class Backup:
         :type attachments: dict
         """
         driver = notifiers(self._config.get("notifier", {}).get("driver", "email"))
-        notifier = driver()
+        notifier = driver(**self._config.get("notifier", {}))
         notifier.send(msg, attachments)
 
     def add_dir(self, dirs=[]):
