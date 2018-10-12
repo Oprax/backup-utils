@@ -2,7 +2,7 @@ import argparse
 from .Backup import Backup
 
 __all__ = ["Backup", "main"]
-__VERSION__ = "0.6.2"
+__VERSION__ = "0.6.3"
 __AUTHOR__ = "Oprax <oprax@me.com>"
 
 
@@ -14,7 +14,12 @@ def main():
     parser.add_argument(
         "-v", "--version", action="version", version="%(prog)s " + __VERSION__
     )
-    parser.add_argument("-r", "--run", action="store_true", help="Create a new backup")
+    parser.add_argument(
+        "-r",
+        "--run",
+        action="store_true",
+        help="Create a new backup, default command if no args given",
+    )
     parser.add_argument(
         "-n",
         "--notify",
@@ -35,7 +40,7 @@ def main():
     elif args.notify:
         bak.notify(
             "Hi, your notifier settings is working !",
-            attachments={"test.log": b"this is a test"},
+            attachments={"test.log": b"test data"},
         )
     else:
         bak.run()

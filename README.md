@@ -8,6 +8,7 @@ Backup Utils
 [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/backup-utils.svg)](https://pypi.org/project/backup-utils/)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
 
+
 The goal of this project is to create a front to backup program like Borg.
 Indeed, Borg is a really great tool for backup,
 but I always write a bash script to specify directories I want to save.
@@ -42,25 +43,32 @@ make build # will produce a `dist/backup_utils.pyz` file
 
 # 2. Usage
 
-There are two commands. 
-The first one is for is for add directory to configuration file which would be backup is the next time.
+```
+usage: backup_utils.pyz [-h] [-v] [-r] [-n] [-d DIR]
+
+Process some integers.
+
+optional arguments:
+  -h, --help         show this help message and exit
+  -v, --version      show program's version number and exit
+  -r, --run          Create a new backup, default command if no args given
+  -n, --notify       Send a notification to test notifier settings
+  -d DIR, --dir DIR  Add a new directory to the backup list, so next run it
+                     will be backup
+```
+ 
+# 3. Example
 
 ```bash
 backup-utils -d /an/absolute/path -d ./a/relative/path
 backup-utils --dir ~/user/path
-```
 
-It is usefull because this command will resolve the path for to have an absolute path.
-
-Ths seconds command is the command to run a backup :
-
-```bash
 backup-utils --run # the long one
 backup-utils -r # the shortcut
 backup-utils # `run` is the default command if there are no argument
 ```
 
-# 3. Configuration
+# 4. Configuration
 
 The configuration file is a JSON file store in `~/.config/bak-utils/config.json`.
 
@@ -69,19 +77,11 @@ You can see `config.example.json` to have an example.
 Root object:
  - `directories`: A list of directories to backup, please use `--dir` command to add a new directory.
  - `repo`: The directory containing the backup and that will be synchronize to a remote server.
+ - `backup`, `sync`, `database` and `notifier` : are tasks objects.
 
-For `backup`, `sync` and `database` object, the most important is the `driver` key.
-The other params is depending the driver.
 
-`backup` driver supported:
- - `borg`
-
-`sync` driver supported:
- - `rclone`
-
-`database` driver supported:
- - `mysql`
-
+For each tasks object, the most important key is the `driver`.
+`backup`, `sync` and `database` objects has hook, which execute a shell command.
+For the moment there are `pre_hook` and `post_hook` which is execute before and after each tasks.
 If there is no `database` key in the config file, this task will be skipped.
-
-
+The other params is depending the driver. See below for more details.

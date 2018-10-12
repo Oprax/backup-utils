@@ -21,9 +21,10 @@
         "host": "smtp.mailgun.org",
         "port": 587,
         "login": "postmaster@mg.example.org",
-        "pswd": "password"
+        "pswd": "p455w0rd"
     },
     "database": {
+        "driver": "mysql",
         "cmd": "mysqldump",
         "user": "root",
         "extra_file": "~/.my.cnf",
