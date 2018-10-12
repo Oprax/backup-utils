@@ -2,7 +2,7 @@ from ..Task import Task
 from ..utils import render
 
 
-class RcloneTask(Task):
+class RcloneSync(Task):
     """
     Task to synchronize with Rclone.
 

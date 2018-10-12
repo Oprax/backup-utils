@@ -5,6 +5,7 @@ from sys import argv
 from pathlib import Path
 
 from .tasks import tasks
+from .syncs import syncs
 from .databases import databases
 from .notifiers import notifiers
 
@@ -83,13 +84,13 @@ class Backup:
         """
         Fecth the sync driver and launch the task.
         """
-        driver = tasks(self._config.get("sync", {}).get("driver", "Rclone"))
-        task = driver(
+        driver = syncs(self._config.get("sync", {}).get("driver", "Rclone"))
+        sync = driver(
             self._config.get("sync", {}).get("cmd", "rclone"),
             repo=str(self._repo),
             **self._config.get("sync", {})
         )
-        task.start()
+        sync.start()
 
     def run(self):
         """
