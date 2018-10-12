@@ -84,8 +84,12 @@ For each tasks object, the most important key is the `driver`.
 `backup`, `sync` and `database` objects has hook, which execute a shell command.
 For the moment there are `pre_hook` and `post_hook` which is execute before and after each tasks.
 If there is no `database` key in the config file, this task will be skipped.
+Database task as a `backup_directory` to specify in which directy, SQL file will be save.
 The other params is depending the driver. See below for more details.
 
 # 5. Drivers
 
-**[Drivers for backup](src/backup_utils/tasks/README.md)**
+**[Drivers for Backup](src/backup_utils/tasks/README.md)**
+**[Drivers for Sync](src/backup_utils/syncs/README.md)**
+**[Drivers for Database](src/backup_utils/databases/README.md)**
+**[Drivers for Notifier](src/backup_utils/notifiers/README.md)**

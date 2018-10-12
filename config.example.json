@@ -26,7 +26,6 @@
     "database": {
         "driver": "mysql",
         "cmd": "mysqldump",
-        "user": "root",
         "extra_file": "~/.my.cnf",
         "backup_directory": "/home/backup/databases",
         "lock_tables": false,

@@ -26,8 +26,6 @@ class MysqlTask(DatabaseTask):
             cmds = [
                 self._cmd,
                 "--defaults-extra-file={}".format(str(extra_file)),
-                "-u",
-                self._config.get("user", "root"),
                 "--single-transaction",
                 "--quick",
                 "--lock-tables={}".format(
