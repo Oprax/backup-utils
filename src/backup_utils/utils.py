@@ -7,7 +7,6 @@ import socket
 
 from datetime import date
 from importlib import import_module
-from pathlib import Path
 
 
 def which(program):
@@ -70,42 +69,21 @@ def render(template):
     return template.format(hostname=hostname(), date=date.today())
 
 
-def factory(class_name="", from_={}):
-    """
-    Return class object depending the name.
-
-    :param class_name: ID of the Task, not case sensitive.
-    :param from_: Dict with str name as key and Class as value.
-    :type class_name: str
-    :type from_: dict
-    """
-    return from_[class_name.lower()]
-
-
-def load(path=".", pkg="", suffix="Task"):
+def load(name, pkg="", suffix="Task"):
     """
     Dynamicaly create a list of all class from a module.
 
-    :param path: Module directory or a file in the module directory.
+    :param name: Name of the driver.
     :param pkg: Absolute name of the module.
     :param suffix: String part in the name of each class to load.
 
-    :type path: str
+    :type name: str
     :type pkg: str
     :type suffix: str
 
-    :return: Dictionary of all class loaded.
-             With as key a string containing the class name in lowercase and without the suffix part.
-             And as value the class (not the object, need to be instantiate)
-    :rtype: dict
+    :return: The task
+    :rtype: class
     """
-    pwd = Path(path).resolve()
-    if pwd.is_file():
-        pwd = pwd.parent
-    tasks = {}
-    for f in pwd.glob("*{}.py".format(suffix.capitalize())):
-        class_name = Path(f).stem
-        slug_name = class_name.lower().replace(suffix.lower(), "")
-        module = import_module("." + class_name, package=pkg)
-        tasks[slug_name] = getattr(module, class_name)
-    return tasks
+    class_name = "{}{}".format(name.capitalize(), suffix.capitalize())
+    module = import_module("." + class_name, package=pkg)
+    return getattr(module, class_name)

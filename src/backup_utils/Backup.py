@@ -4,8 +4,6 @@ import subprocess
 from sys import argv
 from pathlib import Path
 
-from .utils import factory
-
 from .tasks import tasks
 from .databases import databases
 from .notifiers import notifiers
@@ -59,10 +57,7 @@ class Backup:
         """
         Fecth the database driver and launch the task.
         """
-        driver = factory(
-            class_name=self._config.get("database", {}).get("driver", "mysql"),
-            from_=databases,
-        )
+        driver = databases(self._config.get("database", {}).get("driver", "mysql"))
         task = driver(
             self._config.get("database", {}).get("cmd", "mysqldump"),
             repo=str(self._repo),
@@ -75,9 +70,7 @@ class Backup:
         """
         Fecth the backup driver and launch the task.
         """
-        driver = factory(
-            class_name=self._config.get("backup", {}).get("driver", "Borg"), from_=tasks
-        )
+        driver = tasks(self._config.get("backup", {}).get("driver", "Borg"))
         task = driver(
             self._config.get("backup", {}).get("cmd", "borg"),
             directories=self._config.get("directories", []),
@@ -90,9 +83,7 @@ class Backup:
         """
         Fecth the sync driver and launch the task.
         """
-        driver = factory(
-            class_name=self._config.get("sync", {}).get("driver", "Rclone"), from_=tasks
-        )
+        driver = tasks(self._config.get("sync", {}).get("driver", "Rclone"))
         task = driver(
             self._config.get("sync", {}).get("cmd", "rclone"),
             repo=str(self._repo),
@@ -131,10 +122,7 @@ class Backup:
         :type msg: str
         :type attachments: dict
         """
-        driver = factory(
-            class_name=self._config.get("notifier", {}).get("driver", "print"),
-            from_=notifiers,
-        )
+        driver = notifiers(self._config.get("notifier", {}).get("driver", "email"))
         notifier = driver()
         notifier.send(msg, attachments)
 
