@@ -1,12 +1,15 @@
 import argparse
 from .Backup import Backup
 
-__all__ = [Backup.__class__.__name__, "main"]
-__VERSION__ = "0.5.4"
+__all__ = ["Backup", "main"]
+__VERSION__ = "0.6.0"
 __AUTHOR__ = "Oprax <oprax@me.com>"
 
 
 def main():
+    """
+    Expose `backup_utils` method as a command line.
+    """
     parser = argparse.ArgumentParser(description="Process some integers.")
     parser.add_argument(
         "-v", "--version", action="version", version="%(prog)s " + __VERSION__
