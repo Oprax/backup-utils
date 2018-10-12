@@ -59,7 +59,7 @@ class Task(object):
                 raise ValueError(
                     "Can't find '{}' binary for {} hook".format(hook, hook_name)
                 )
-        self._exec(hook)
+            self._exec(hook)
 
     def _run(self):
         """
