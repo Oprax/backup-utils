@@ -1,10 +1,8 @@
-from pathlib import Path
+from functools import partial
 from ..utils import load
 
 
 __all__ = ["notifiers"]
 
 
-notifiers = load(
-    path=Path(__file__).resolve(), pkg="backup_utils.notifiers", suffix="Notifier"
-)
+notifiers = partial(load, pkg="backup_utils.notifiers", suffix="Notifier")

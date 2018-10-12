@@ -1,10 +1,8 @@
-from pathlib import Path
+from functools import partial
 from ..utils import load
 
 
 __all__ = ["databases"]
 
 
-databases = load(
-    path=Path(__file__).resolve(), pkg="backup_utils.databases", suffix="Task"
-)
+databases = partial(load, pkg="backup_utils.databases", suffix="Task")

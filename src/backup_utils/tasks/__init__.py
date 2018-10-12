@@ -1,8 +1,8 @@
-from pathlib import Path
+from functools import partial
 from ..utils import load
 
 
 __all__ = ["tasks"]
 
 
-tasks = load(path=Path(__file__).resolve(), pkg="backup_utils.tasks", suffix="Task")
+tasks = partial(load, pkg="backup_utils.tasks", suffix="Task")
