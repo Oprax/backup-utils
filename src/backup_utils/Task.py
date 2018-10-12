@@ -1,9 +1,8 @@
 import subprocess
-from os import environ
-from .utils import which, render
+from .utils import which
 
 
-__all__ = ["Task", "BorgTask", "RcloneTask", "_tasks"]
+__all__ = ["Task"]
 
 
 class Task(object):
@@ -80,59 +79,3 @@ class Task(object):
         self._hook("pre_hook")
         self._run()
         self._hook("post_hook")
-
-
-class BorgTask(Task):
-    """
-    Task to run BorgBackup.
-
-    .. seealso:: Task()
-    """
-
-    def _run(self):
-        """
-        Create a new environment to pass repo path and password to backup.
-        Then execute the backup and prune olf backup.
-        """
-        borg_env = environ.copy()
-        borg_env["BORG_PASSPHRASE"] = self._config.get("pswd", "")
-        borg_env["BORG_REPO"] = self._config.get("repo")
-
-        compression = self._config.get("compression", "lzma")
-        bak_name = render("::{hostname}-{date}")
-        borg_cmds = [
-            self._cmd,
-            "create",
-            "-v",
-            "--stats",
-            "--compression",
-            compression,
-            "--exclude-caches",
-            bak_name,
-        ]
-        borg_cmds.extend(set(self._config.get("directories", [])))
-        self._exec(borg_cmds, env=borg_env)
-
-        prune_cmds = [self._cmd, "prune", "-v", "::"]
-        prune_cmds.extend(self._config.get("prune", "-d 7 -w 4 -m 3 -y 1").split(" "))
-        self._exec(prune_cmds, env=borg_env)
-
-
-class RcloneTask(Task):
-    """
-    Task to synchronize with Rclone.
-
-    .. seealso:: Task()
-    """
-
-    def _run(self):
-        """
-        Synchronize using repo.
-        """
-        dist = render(self._config.get("dist", ""))
-        repo = self._config.get("repo")
-        rclone_cmds = [self._cmd, "-v", "sync", repo, dist]
-        self._exec(rclone_cmds)
-
-
-_tasks = {"task": Task, "borg": BorgTask, "rclone": RcloneTask}

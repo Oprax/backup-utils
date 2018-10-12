@@ -6,9 +6,9 @@ from pathlib import Path
 
 from .utils import factory
 
-from .Task import _tasks as tasks
-from .DatabaseTask import _tasks as databases
-from .Notifier import _tasks as notifiers
+from .tasks import tasks
+from .databases import databases
+from .notifiers import notifiers
 
 
 class Backup:
@@ -61,7 +61,7 @@ class Backup:
         """
         driver = factory(
             class_name=self._config.get("database", {}).get("driver", "mysql"),
-            _from=databases,
+            from_=databases,
         )
         task = driver(
             self._config.get("database", {}).get("cmd", "mysqldump"),
@@ -76,7 +76,7 @@ class Backup:
         Fecth the backup driver and launch the task.
         """
         driver = factory(
-            class_name=self._config.get("backup", {}).get("driver", "Borg"), _from=tasks
+            class_name=self._config.get("backup", {}).get("driver", "Borg"), from_=tasks
         )
         task = driver(
             self._config.get("backup", {}).get("cmd", "borg"),
@@ -91,7 +91,7 @@ class Backup:
         Fecth the sync driver and launch the task.
         """
         driver = factory(
-            class_name=self._config.get("sync", {}).get("driver", "Rclone"), _from=tasks
+            class_name=self._config.get("sync", {}).get("driver", "Rclone"), from_=tasks
         )
         task = driver(
             self._config.get("sync", {}).get("cmd", "rclone"),
@@ -133,7 +133,7 @@ class Backup:
         """
         driver = factory(
             class_name=self._config.get("notifier", {}).get("driver", "print"),
-            _from=notifiers,
+            from_=notifiers,
         )
         notifier = driver()
         notifier.send(msg, attachments)

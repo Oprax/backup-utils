@@ -26,6 +26,7 @@ setuptools.setup(
         "License :: OSI Approved :: MIT License",
         "Development Status :: 3 - Alpha",
         "Environment :: Console",
+        "Operating System :: POSIX",
         "Topic :: System :: Archiving :: Backup",
         "Intended Audience :: System Administrators",
     ],
