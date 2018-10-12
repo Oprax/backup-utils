@@ -8,10 +8,21 @@ Backup Utils
 [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/backup-utils.svg)](https://pypi.org/project/backup-utils/)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
 
+The goal of this project is to create a front to backup program like Borg.
+Indeed, Borg is a really great tool for backup,
+but I always write a bash script to specify directories I want to save.
+I also use Rclone to synchronize my backup to a remote.
+And finally I need to backup my database.
 
-The goal of the project is to simplify backup creation. 
-At the beggining it's using [BorgBackup](https://www.borgbackup.org/) and [Rclone](https://rclone.org).
-Now you can extend it !
+There are three steps to backup :
+1. Database export
+2. Archiving
+3. Synchronize
+
+For each step, you can use multiple driver define in the `DatabaseTask.py` or `Task.py`.
+Also if something go wrong, all Exceptions are catch to send a notification.
+
+By default, database export use **mysql**, archiving **borg**, and synchronize **rclone**.
 
 # 1. Installation
 
