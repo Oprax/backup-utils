@@ -11,23 +11,24 @@ class Task(object):
     if you create a Task, you class must be a children of this class.
     """
 
-    def __init__(self, cmd, **kwargs):
+    default_cmd = ""
+
+    def __init__(self, **kwargs):
         """
         Create a Task object,
         take the binary command and multiple other params use as config.
 
-        :param cmd: the command (without arguments), will be pass throug which
         :param kwargs: Other params that will be use for the configuration.
                        Can be very different between each task.
-        :type cmd: str
         :type kwargs: dict
 
         .. seealso:: which()
         """
+        self._config = kwargs
+        cmd = self._config.get("cmd", self.default_cmd)
         self._cmd = which(cmd)
         if not self._cmd:
             raise ValueError("Can't find '{}' binary".format(cmd))
-        self._config = kwargs
 
     def _exec(self, cmds, env=None):
         """

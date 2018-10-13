@@ -60,7 +60,6 @@ class Backup:
         """
         driver = databases(self._config.get("database", {}).get("driver", "mysql"))
         task = driver(
-            self._config.get("database", {}).get("cmd", "mysqldump"),
             repo=str(self._repo),
             **self._config.get("database", {})
         )
@@ -73,7 +72,6 @@ class Backup:
         """
         driver = tasks(self._config.get("backup", {}).get("driver", "Borg"))
         task = driver(
-            self._config.get("backup", {}).get("cmd", "borg"),
             directories=self._config.get("directories", []),
             repo=str(self._repo),
             **self._config.get("backup", {})
@@ -86,7 +84,6 @@ class Backup:
         """
         driver = syncs(self._config.get("sync", {}).get("driver", "Rclone"))
         sync = driver(
-            self._config.get("sync", {}).get("cmd", "rclone"),
             repo=str(self._repo),
             **self._config.get("sync", {})
         )
