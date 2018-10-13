@@ -1,10 +1,29 @@
+"""
+Usefull function needed by the module.
+"""
+
 import os
 import socket
 
 from datetime import date
+from importlib import import_module
 
 
 def which(program):
+    """
+    Fetch for the absolute path of a binary, same as `which` Unix command.
+
+    :param program: Name of the program
+    :type program: str
+    :return: Absolute path of the program, or None if path not found.
+    :rtype: str
+
+    :Example:
+
+    >>> which("ls")
+    /bin/ls
+    """
+
     def is_exe(fpath):
         return os.path.isfile(fpath) and os.access(fpath, os.X_OK)
 
@@ -22,6 +41,12 @@ def which(program):
 
 
 def hostname():
+    """
+    Return the hostname of the current machine.
+
+    :return: the hostname of the current machine
+    :rtype: str
+    """
     if socket.gethostname().find(".") >= 0:
         return socket.gethostname()
     else:
@@ -29,4 +54,36 @@ def hostname():
 
 
 def render(template):
+    """
+    Format the template using hostname variable and date of the day.
+
+    :param template: string to format
+    :param template: string to format
+
+    :return: the rendered template
+    :rtype: str
+
+    :Example:
+    >>> render("machine-{hostname}-{date}")
+    """
     return template.format(hostname=hostname(), date=date.today())
+
+
+def load(name, pkg="", suffix="Task"):
+    """
+    Dynamicaly create a list of all class from a module.
+
+    :param name: Name of the driver.
+    :param pkg: Absolute name of the module.
+    :param suffix: String part in the name of each class to load.
+
+    :type name: str
+    :type pkg: str
+    :type suffix: str
+
+    :return: The task
+    :rtype: class
+    """
+    class_name = "{}{}".format(name.capitalize(), suffix.capitalize())
+    module = import_module("." + class_name, package=pkg)
+    return getattr(module, class_name)

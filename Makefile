@@ -12,7 +12,7 @@ run: build
 	pipenv run python ./dist/backup_utils.pyz -v
 
 test:
-	PYTHONPATH="${PYTHONPATH}:${PWD}/src" pipenv run pytest
+	PYTHONPATH="${PYTHONPATH}:${PWD}/src" pipenv run pytest -s --cov=backup_utils
 
 install: clean
 	cd src && pipenv run python setup.py install
