@@ -19,7 +19,6 @@ def directories_setup():
     yield p
     f.unlink()
     p.rmdir()
-    cfg.unlink()
     if cfg.exists():
         cfg.unlink()
     cfg_bak.rename(cfg)

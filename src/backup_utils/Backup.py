@@ -59,10 +59,7 @@ class Backup:
         Fecth the database driver and launch the task.
         """
         driver = databases(self._config.get("database", {}).get("driver", "mysql"))
-        task = driver(
-            repo=str(self._repo),
-            **self._config.get("database", {})
-        )
+        task = driver(repo=str(self._repo), **self._config.get("database", {}))
         task.start()
         self._config.get("directories", []).append(task.backup_dir)
 
@@ -83,10 +80,7 @@ class Backup:
         Fecth the sync driver and launch the task.
         """
         driver = syncs(self._config.get("sync", {}).get("driver", "Rclone"))
-        sync = driver(
-            repo=str(self._repo),
-            **self._config.get("sync", {})
-        )
+        sync = driver(repo=str(self._repo), **self._config.get("sync", {}))
         sync.start()
 
     def run(self):

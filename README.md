@@ -3,6 +3,7 @@ Backup Utils
 
 
 [![pipeline status](https://gitlab.com/Oprax/backup-utils/badges/master/pipeline.svg)](https://gitlab.com/Oprax/backup-utils/commits/master)
+[![coverage report](https://gitlab.com/Oprax/backup-utils/badges/master/coverage.svg)](https://gitlab.com/Oprax/backup-utils/commits/master)
 [![PyPI - License](https://img.shields.io/pypi/l/backup-utils.svg)](https://gitlab.com/Oprax/backup-utils/blob/master/LICENSE)
 [![PyPI](https://img.shields.io/pypi/v/backup-utils.svg)](https://pypi.org/project/backup-utils/)
 [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/backup-utils.svg)](https://pypi.org/project/backup-utils/)
