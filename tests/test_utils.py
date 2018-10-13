@@ -36,5 +36,5 @@ def test_load(directories_setup):
     assert class_ == RcloneSync
     class_ = utils.load("email", pkg="backup_utils.notifiers", suffix="Notifier")
     assert class_ == EmailNotifier
-    with pytest.raises(ModuleNotFoundError):
+    with pytest.raises(ImportError):
         utils.load("not_exist_at_all", pkg="backup_utils.tasks", suffix="Task")
