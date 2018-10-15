@@ -1,3 +1,6 @@
+from sys import stderr
+
+
 class Notifier(object):
     """
     Parent Notifier class, if you create a Notifier,
@@ -25,4 +28,4 @@ class Notifier(object):
         :type msg: str
         :type attachments: dict
         """
-        print(msg, attachments)
+        print(msg, attachments, file=stderr)
