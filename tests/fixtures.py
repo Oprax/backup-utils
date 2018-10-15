@@ -5,23 +5,27 @@ from pathlib import Path
 from backup_utils import Backup
 
 
-_cfg = {"backup": {"cmd": "cmd_test", "pre_hook": "hook1", "post_hook": "hook2"}}
-
-
 def utils_which(args):
     return args
 
 
-def subprocess_run(*args, **kwargs):
+def subprocess_run(cmds, *args, **kwargs):
     from subprocess import CompletedProcess
 
-    cmd = _cfg.get("backup", {}).get("cmd", "cmd_test")
-    return CompletedProcess([cmd], 0)
+    return CompletedProcess(cmds, 0)
 
 
 @pytest.yield_fixture()
-def config():
-    yield _cfg
+def config(tmpdir_factory):
+    db_dir = tmpdir_factory.mktemp("db")
+    yield {
+        "backup": {"cmd": "cmd_test", "pre_hook": "hook1", "post_hook": "hook2"},
+        "database": {
+            "cmd": "sqldump",
+            "database": ["myapp", "testapp"],
+            "backup_directory": str(db_dir),
+        },
+    }
 
 
 @pytest.yield_fixture()

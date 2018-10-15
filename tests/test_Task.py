@@ -9,15 +9,8 @@ from fixtures import config, utils_which, subprocess_run
 def test_task(mock_which, mock_run, config):
     from backup_utils.Task import Task
 
-    assert type(config) == type({})
     t = Task(**config.get("backup"))
     t.start()
-    mock_run.assert_any_call(
-        "hook1", check=True, env=None, stderr=PIPE, stdout=PIPE
-    )
-    mock_run.assert_any_call(
-        "cmd_test", check=True, env=None, stderr=PIPE, stdout=PIPE
-    )
-    mock_run.assert_any_call(
-        "hook2", check=True, env=None, stderr=PIPE, stdout=PIPE
-    )
+    mock_run.assert_any_call("hook1", check=True, env=None, stderr=PIPE, stdout=PIPE)
+    mock_run.assert_any_call("cmd_test", check=True, env=None, stderr=PIPE, stdout=PIPE)
+    mock_run.assert_any_call("hook2", check=True, env=None, stderr=PIPE, stdout=PIPE)
