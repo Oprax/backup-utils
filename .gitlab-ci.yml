@@ -17,7 +17,6 @@ pyz:
 
 .test_template:
   before_script:
-    - apt-get install -y borgbackup rclone
     - pipenv install --dev
   script: make test
 

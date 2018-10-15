@@ -1,4 +1,4 @@
-.PHONY: build run test clean install upload
+.PHONY: build run test testdev clean install upload
 
 clean:
 	rm -rf src/*.egg-info
@@ -12,7 +12,10 @@ run: build
 	pipenv run python ./dist/backup_utils.pyz -v
 
 test:
-	PYTHONPATH="${PYTHONPATH}:${PWD}/src" pipenv run pytest -s --cov=backup_utils
+	PYTHONPATH="${PYTHONPATH}:${PWD}/src" pipenv run pytest --cov=backup_utils
+
+testdev:
+	PYTHONPATH="${PYTHONPATH}:${PWD}/src" pipenv run pytest -s -x
 
 install: clean
 	cd src && pipenv run python setup.py install
