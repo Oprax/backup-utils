@@ -2,8 +2,6 @@ import pytest
 
 from pathlib import Path
 
-from backup_utils import Backup
-
 
 def utils_which(args):
     return args
@@ -12,13 +10,15 @@ def utils_which(args):
 def subprocess_run(cmds, *args, **kwargs):
     from subprocess import CompletedProcess
 
-    return CompletedProcess(cmds, 0)
+    return CompletedProcess(cmds, 0, stdout=b"", stderr=b"")
 
 
 @pytest.yield_fixture()
 def config(tmpdir_factory):
     db_dir = tmpdir_factory.mktemp("db")
+    repo_dir = tmpdir_factory.mktemp("repo")
     yield {
+        "repo": str(repo_dir),
         "backup": {"cmd": "cmd_test", "pre_hook": "hook1", "post_hook": "hook2"},
         "database": {
             "cmd": "sqldump",
@@ -30,6 +30,8 @@ def config(tmpdir_factory):
 
 @pytest.yield_fixture()
 def directories_setup():
+    from backup_utils import Backup
+
     cfg = Path(Backup()._cfg_file)
     cfg_bak = cfg.with_suffix(".bak")
     if cfg_bak.exists():

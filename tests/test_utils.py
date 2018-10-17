@@ -2,7 +2,7 @@ import subprocess
 
 import pytest
 
-from fixtures import directories_setup
+from .fixtures import directories_setup
 
 from backup_utils import utils
 
