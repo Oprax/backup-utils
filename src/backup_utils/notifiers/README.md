@@ -1,5 +1,10 @@
 # List of drivers for Notifier task
 
+### Print
+
+Driver name : `print`
+Automatically output errors to `stderr`.
+
 ### Email
 
 Driver name : `email`

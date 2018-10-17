@@ -1,4 +1,4 @@
-from sys import stderr
+import sys
 
 
 class Notifier(object):
@@ -28,4 +28,4 @@ class Notifier(object):
         :type msg: str
         :type attachments: dict
         """
-        print(msg, attachments, file=stderr)
+        print(msg, attachments, file=sys.stderr)

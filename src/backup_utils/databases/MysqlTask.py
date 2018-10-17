@@ -10,6 +10,8 @@ class MysqlTask(DatabaseTask):
     Mysql driver for DatabaseTask.
     """
 
+    default_cmd = "mysqldump"
+
     def _run(self):
         """
         Create a backup of databe in mysql using mysqldump

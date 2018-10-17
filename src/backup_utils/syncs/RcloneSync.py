@@ -9,6 +9,8 @@ class RcloneSync(Task):
     .. seealso:: Task()
     """
 
+    default_cmd = "rclone"
+
     def _run(self):
         """
         Synchronize using repo.
