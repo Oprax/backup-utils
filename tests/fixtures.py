@@ -30,7 +30,9 @@ def config(tmpdir_factory):
 
 class FakeFile:
     def __init__(self, fpath, content=None, charset="utf-8"):
-        self._fpath = Path(fpath).expanduser().resolve()
+        self._fpath = Path(fpath).expanduser()
+        if self._fpath.exists():
+            self._fpath = self._fpath.resolve()
         self._bak = self._fpath.with_suffix(".bak")
         if isinstance(content, str):
             content = content.encode(charset)
