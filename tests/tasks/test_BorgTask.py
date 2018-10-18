@@ -1,4 +1,4 @@
-from unittest.mock import patch
+from unittest.mock import patch, ANY
 from subprocess import PIPE
 from os import environ
 
@@ -10,9 +10,10 @@ from ..fixtures import config, utils_which, subprocess_run
 @pytest.yield_fixture()
 def my_cfg(config):
     new_cfg = config.copy()
-    new_cfg.setdefault("backup", {}).update(
-        {"driver": "borg", "pswd": "123456789", "compression": "zlib,3"}
-    )
+    bk_cfg = new_cfg.get("backup", {})
+    bk_cfg.update({"driver": "borg", "pswd": "123456789", "compression": "zlib,3"})
+    del bk_cfg["cmd"]
+    new_cfg["backup"] = bk_cfg.copy()
     yield new_cfg
 
 
@@ -40,7 +41,10 @@ def test_BorgTask(mock_which, mock_run, my_cfg):
             render("::{hostname}-{date}"),
         ],
         check=True,
-        env=test_env,
+        env=ANY,
         stderr=PIPE,
         stdout=PIPE,
     )
+    prune_args = ["borg", "prune", "-v", "::"]
+    prune_args.extend("-d 7 -w 4 -m 3 -y 1".split(" "))
+    mock_run.assert_any_call(prune_args, check=True, env=ANY, stderr=PIPE, stdout=PIPE)
