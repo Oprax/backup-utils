@@ -4,10 +4,12 @@ from ..utils import render
 
 class RcloneSync(Task):
     """
-    Task to synchronize with Rclone.
+    A task to synchronize with Rclone.
 
     .. seealso:: Task()
     """
+
+    default_cmd = "rclone"
 
     def _run(self):
         """

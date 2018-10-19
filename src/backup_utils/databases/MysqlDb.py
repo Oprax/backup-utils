@@ -5,14 +5,16 @@ from gzip import compress
 from ..DatabaseTask import DatabaseTask
 
 
-class MysqlTask(DatabaseTask):
+class MysqlDb(DatabaseTask):
     """
     Mysql driver for DatabaseTask.
     """
 
+    default_cmd = "mysqldump"
+
     def _run(self):
         """
-        Create a backup of databe in mysql using mysqldump
+        Create a backup of a database in mysql using mysqldump
         """
         extra_file = (
             Path(self._config.get("extra_file", "~/.my.cnf")).expanduser().resolve()

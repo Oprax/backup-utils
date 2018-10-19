@@ -1,7 +1,10 @@
+import sys
+
+
 class Notifier(object):
     """
     Parent Notifier class, if you create a Notifier,
-    you class must be a children of this class.
+    your class must be a child of this class.
     """
 
     def __init__(self, **kwargs):
@@ -9,7 +12,7 @@ class Notifier(object):
         Create a Notifier object,
         take multiple params, as config.
 
-        :param kwargs: Other params that will be use for the configuration.
+        :param kwargs: Other params that will be used for the configuration.
                        Can be very different between each task.
         :type kwargs: dict
         """
@@ -21,8 +24,8 @@ class Notifier(object):
 
         :param msg: The message to send
         :param attachments: Dictionary of files to send with the message,
-                            with as key the filename and value the file content in byte.
+                            with as key the filename and value the file content in bytes.
         :type msg: str
         :type attachments: dict
         """
-        print(msg, attachments)
+        print(msg, attachments, file=sys.stderr)

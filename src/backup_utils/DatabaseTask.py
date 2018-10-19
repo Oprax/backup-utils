@@ -6,7 +6,7 @@ from .Task import Task
 class DatabaseTask(Task):
     """
     Parent DatabaseTask class, if you create a DatabaseTask,
-    you class must be a children of this class.
+    your class must be a child of this class.
     This class is a child of `Task`.
 
     .. seealso:: Task()
@@ -14,7 +14,7 @@ class DatabaseTask(Task):
 
     def start(self):
         """
-        Test if the directory to backup database file exist.
+        Test if the directory to backup database file exists.
 
         .. seealso:: Task.start()
         """
@@ -22,7 +22,7 @@ class DatabaseTask(Task):
             Path(self._config.get("backup_directory", "")).expanduser().resolve()
         )
         if not self._bak_dir.exists():
-            raise ValueError("'{}' directory don't exist !".format(self._bak_dir))
+            raise ValueError("'{}' directory don't exists !".format(self._bak_dir))
         super().start()
 
     @property

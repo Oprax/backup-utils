@@ -5,4 +5,4 @@ from ..utils import load
 __all__ = ["databases"]
 
 
-databases = partial(load, pkg="backup_utils.databases", suffix="Task")
+databases = partial(load, pkg="backup_utils.databases", suffix="Db")

@@ -2,13 +2,13 @@ from pathlib import Path
 
 import setuptools
 
-from backup_utils import __VERSION__, __AUTHOR__
+from backup_utils import __version__, __AUTHOR__
 
 ROOT = Path(__file__).resolve().parent.parent
 
 setuptools.setup(
     name="backup_utils",
-    version=__VERSION__,
+    version=__version__,
     author=__AUTHOR__.split(" <")[0],
     author_email=__AUTHOR__.split(" <")[1].strip("<>"),
     description="The goal of the project is to simplify backup creation.",
@@ -24,7 +24,7 @@ setuptools.setup(
         "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
         "License :: OSI Approved :: MIT License",
-        "Development Status :: 3 - Alpha",
+        "Development Status :: 4 - Beta",
         "Environment :: Console",
         "Operating System :: POSIX",
         "Topic :: System :: Archiving :: Backup",

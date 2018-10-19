@@ -17,7 +17,7 @@ class Backup:
 
     def __init__(self):
         """
-        Get root path and initialize the configuration.
+        Get the root path and initialize the configuration.
 
         .. seealso:: _load_cfg()
         """
@@ -56,7 +56,7 @@ class Backup:
 
     def _database(self):
         """
-        Fecth the database driver and launch the task.
+        Fetch the database driver and launch the task.
         """
         driver = databases(self._config.get("database", {}).get("driver", "mysql"))
         task = driver(repo=str(self._repo), **self._config.get("database", {}))
@@ -65,7 +65,7 @@ class Backup:
 
     def _backup(self):
         """
-        Fecth the backup driver and launch the task.
+        Fetch the backup driver and launch the task.
         """
         driver = tasks(self._config.get("backup", {}).get("driver", "Borg"))
         task = driver(
@@ -77,7 +77,7 @@ class Backup:
 
     def _sync(self):
         """
-        Fecth the sync driver and launch the task.
+        Fetch the sync driver and launch the task.
         """
         driver = syncs(self._config.get("sync", {}).get("driver", "Rclone"))
         sync = driver(repo=str(self._repo), **self._config.get("sync", {}))
@@ -85,7 +85,7 @@ class Backup:
 
     def run(self):
         """
-        Run all steps and catch error to notify user if something go wrong.
+        Run all steps and catch error to notify the user if something goes wrong.
 
         .. raises:: Exception
         """
@@ -110,7 +110,7 @@ class Backup:
 
         :param msg: The message to send
         :param attachments: Dictionary of files to send with the message,
-                            with as key the filename and value the file content in byte.
+                            with as key the filename and value the file content in bytes.
         :type msg: str
         :type attachments: dict
         """
@@ -121,7 +121,7 @@ class Backup:
     def add_dir(self, dirs=[]):
         """
         Resolve and add directories path to the config file.
-        Also remove duplicate value.
+        Also, remove duplicate value.
 
         :param dirs: Directories to add to the config file
         :type dirs: iterable

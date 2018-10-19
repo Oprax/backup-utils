@@ -8,7 +8,7 @@ __all__ = ["Task"]
 class Task(object):
     """
     Parent Task class,
-    if you create a Task, you class must be a children of this class.
+    if you create a Task, your class must be a child of this class.
     """
 
     default_cmd = ""
@@ -18,7 +18,7 @@ class Task(object):
         Create a Task object,
         take the binary command and multiple other params use as config.
 
-        :param kwargs: Other params that will be use for the configuration.
+        :param kwargs: Other params that will be used for the configuration.
                        Can be very different between each task.
         :type kwargs: dict
 
@@ -32,13 +32,13 @@ class Task(object):
 
     def _exec(self, cmds, env=None):
         """
-        Method to run a command in the shell and simplify, sortcut of `subprocess.run()`
+        Method to run a command in the shell and simplify, shortcut of `subprocess.run()`
 
-        :param cmds: Comand and agrument to execute.
-        :param env: To override the current environment and to add environment variable.
+        :param cmds: Comand and argument to execute.
+        :param env: To override the current environment and to add the environment variable.
         :type cmds: iterable
         :type env: dict
-        :return: Th result of the command
+        :return: The result of the command.
         :rtype: subprocess.CompletedProcess
 
         .. seealso:: subprocess.run()
@@ -49,7 +49,7 @@ class Task(object):
 
     def _hook(self, hook_name):
         """
-        Run fetch and run a hook if this one exist.
+        Run fetch and run a hook if this one exists.
 
         :param hook_name: An ID to differentiated each hook.
         :type hook_name: str
@@ -64,7 +64,7 @@ class Task(object):
 
     def _run(self):
         """
-        Core of the object which will process the Task.
+        The core of the object which will process the Task.
 
         .. seealso:: start()
         """
@@ -72,7 +72,7 @@ class Task(object):
 
     def start(self):
         """
-        Start a task, and lauch hook.
+        Start a task and launch hook.
         Prefer this method instead of `_run()`.
 
         .. seealso:: _run()
