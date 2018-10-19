@@ -33,7 +33,7 @@ def test_TarTask(mock_which, mock_run, my_cfg):
             "-c",
             "-J",
             "-f",
-            str(Path(my_cfg.get("repo"))/render("{hostname}.tar.xz")),
+            str(Path(my_cfg.get("repo")) / render("{hostname}.tar.xz")),
         ],
         check=True,
         env=None,
