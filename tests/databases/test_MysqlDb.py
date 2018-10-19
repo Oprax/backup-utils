@@ -19,8 +19,8 @@ def my_cfg(config):
 
 @patch("subprocess.run", side_effect=subprocess_run)
 @patch("backup_utils.utils.which", side_effect=utils_which)
-def test_MysqlTask(mock_which, mock_run, my_cfg):
-    from backup_utils.databases.MysqlTask import MysqlTask
+def test_MysqlDb(mock_which, mock_run, my_cfg):
+    from backup_utils.databases.MysqlDb import MysqlDb
 
     cnf_content = """[client]
 protocol=TCP
@@ -29,7 +29,7 @@ user=root
 password=root
 """
     with FakeFile("~/.my.cnf", content=cnf_content) as my_cnf:
-        t = MysqlTask(repo=my_cfg.get("repo"), **my_cfg.get("database"))
+        t = MysqlDb(repo=my_cfg.get("repo"), **my_cfg.get("database"))
         t.start()
         mock_run.assert_called_once_with(
             [

@@ -5,7 +5,7 @@ from gzip import compress
 from ..DatabaseTask import DatabaseTask
 
 
-class MysqlTask(DatabaseTask):
+class MysqlDb(DatabaseTask):
     """
     Mysql driver for DatabaseTask.
     """
