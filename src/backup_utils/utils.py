@@ -1,5 +1,5 @@
 """
-Usefull function needed by the module.
+Useful functions needed by the module.
 """
 
 import os
@@ -55,7 +55,7 @@ def hostname():
 
 def render(template):
     """
-    Format the template using hostname variable and date of the day.
+    Format the template using the hostname variable and date of the day.
 
     :param template: string to format
     :param template: string to format
@@ -71,7 +71,7 @@ def render(template):
 
 def load(name, pkg="", suffix="Task"):
     """
-    Dynamicaly create a list of all class from a module.
+    Dynamically creates a list of all class from a module.
 
     :param name: Name of the driver.
     :param pkg: Absolute name of the module.

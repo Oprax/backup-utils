@@ -2,7 +2,7 @@ import argparse
 from .Backup import Backup
 
 __all__ = ["Backup", "main"]
-__version__ = "0.7.0"
+__version__ = "1.0.0-beta"
 __AUTHOR__ = "Oprax <oprax@me.com>"
 
 
@@ -18,7 +18,7 @@ def main():
         "-r",
         "--run",
         action="store_true",
-        help="Create a new backup, default command if no args given",
+        help="Create a new backup, default command if no args has given",
     )
     parser.add_argument(
         "-n",
@@ -31,7 +31,7 @@ def main():
         "--dir",
         required=False,
         action="append",
-        help="Add a new directory to the backup list, so next run it will be backup",
+        help="Add a new directory to the backup list, so next run it will be back up",
     )
     args = parser.parse_args()
     bak = Backup()
