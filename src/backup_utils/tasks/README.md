@@ -1,8 +1,8 @@
-# List of drivers for Backup task
+# List of drivers for Backup tasks
 
 ### Borg
 
-Driver name : `borg`
+Driver name: `borg`
 List of all options :
  - `pswd`: borg repo password
  - `compression`: same as --compression arg of [borg](https://borgbackup.readthedocs.io/en/stable/usage/create.html).

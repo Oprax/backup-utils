@@ -5,7 +5,7 @@ from os import environ
 
 class BorgTask(Task):
     """
-    Task to run BorgBackup.
+    A task to run BorgBackup.
 
     .. seealso:: Task()
     """
@@ -14,7 +14,7 @@ class BorgTask(Task):
 
     def _run(self):
         """
-        Create a new environment to pass repo path and password to backup.
+        Create a new environment to pass the repo path and password to backup.
         Then execute the backup and prune olf backup.
         """
         borg_env = environ.copy()

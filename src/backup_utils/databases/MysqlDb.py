@@ -14,7 +14,7 @@ class MysqlDb(DatabaseTask):
 
     def _run(self):
         """
-        Create a backup of databe in mysql using mysqldump
+        Create a backup of a database in mysql using mysqldump
         """
         extra_file = (
             Path(self._config.get("extra_file", "~/.my.cnf")).expanduser().resolve()

@@ -2,7 +2,7 @@
 
 ### Print
 
-Driver name : `print`
+Driver name: `print`
 Automatically output errors to `stderr`.
 
 ### Email
