@@ -1,4 +1,3 @@
-import smtplib
 from unittest.mock import patch, ANY, call
 import pytest
 from ..fixtures import config
@@ -22,7 +21,7 @@ def my_cfg(config):
     yield new_cfg
 
 
-@patch.object(smtplib, "SMTP")
+@patch("backup_utils.notifiers.EmailNotifier.SMTP")
 def test_email(mock_SMTP, my_cfg):
     from backup_utils.notifiers.EmailNotifier import EmailNotifier
 
@@ -33,5 +32,5 @@ def test_email(mock_SMTP, my_cfg):
         call(cfg.get("host"), cfg.get("port")),
         call().login(cfg.get("login"), cfg.get("pswd")),
         call().sendmail(cfg.get("from"), cfg.get("to"), ANY),
-        call().quit()
+        call().quit(),
     ]
