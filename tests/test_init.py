@@ -11,12 +11,12 @@ from .fixtures import FakeFile, config
 
 @patch.object(sys, "argv", ["backup_utils", "-v"])
 def test_version(capsys):
-    from backup_utils import main, __VERSION__
+    from backup_utils import main, __version__
 
     with pytest.raises(SystemExit):
         main()
     captured = capsys.readouterr()
-    assert __VERSION__ in captured.out
+    assert __version__ in captured.out
 
 
 @patch.object(sys, "argv", ["backup_utils", "-d" "./"])
