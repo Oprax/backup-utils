@@ -3,7 +3,7 @@ from pathlib import Path
 
 import pytest
 
-from .fixtures import config, directories_setup
+from .fixtures import config
 
 
 @pytest.yield_fixture()
