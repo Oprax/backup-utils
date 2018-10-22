@@ -11,8 +11,8 @@ from ..fixtures import config, utils_which, subprocess_run
 
 @pytest.yield_fixture()
 def my_cfg(config, tmpdir_factory):
-    db_file = Path(str(tmpdir_factory.mktemp("db")))
-    db_file = (db_file / "stocks.db").resolve()
+    db_file = Path(str(tmpdir_factory.mktemp("db"))).resolve()
+    db_file = db_file / "stocks.db"
 
     conn = sqlite3.connect(str(db_file))
     c = conn.cursor()
