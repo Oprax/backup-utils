@@ -6,7 +6,7 @@ from unittest.mock import patch
 
 import pytest
 
-from .fixtures import FakeFile, config
+from conftest import FakeFile, config
 
 
 @patch.object(sys, "argv", ["backup_utils", "-v"])

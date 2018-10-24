@@ -4,7 +4,7 @@ from pathlib import Path
 
 import pytest
 
-from ..fixtures import config, utils_which, subprocess_run
+from conftest import config, utils_which, subprocess_run
 
 
 @pytest.yield_fixture()

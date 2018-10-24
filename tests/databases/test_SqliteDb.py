@@ -6,7 +6,7 @@ import sqlite3
 
 import pytest
 
-from ..fixtures import config, utils_which, subprocess_run
+from conftest import config, utils_which, subprocess_run
 
 
 @pytest.yield_fixture()
@@ -17,8 +17,10 @@ def my_cfg(config, tmpdir_factory):
     conn = sqlite3.connect(str(db_file))
     c = conn.cursor()
 
-    c.execute("""CREATE TABLE stocks
-                (date text, trans text, symbol text, qty real, price real)""")
+    c.execute(
+        """CREATE TABLE stocks
+                (date text, trans text, symbol text, qty real, price real)"""
+    )
     c.execute("INSERT INTO stocks VALUES ('2006-01-05','BUY','RHAT',100,35.14)")
     conn.commit()
     conn.close()
@@ -39,11 +41,7 @@ def test_TarTask(mock_which, mock_run, my_cfg):
     t = SqliteDb(**my_cfg.get("database"))
     t.start()
     mock_run.assert_called_once_with(
-        [
-            "sqlite3",
-            my_cfg.get("database", {}).get("database")[0],
-            ".dump",
-        ],
+        ["sqlite3", my_cfg.get("database", {}).get("database")[0], ".dump"],
         check=True,
         env=None,
         stderr=PIPE,
