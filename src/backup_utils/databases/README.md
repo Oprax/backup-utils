@@ -1,6 +1,9 @@
 # List of drivers for Database task
 
-For each database driver, there is a `backup_directory` settings which is the directory which store backups file.
+For each database driver:
+ - `backup_directory`: is the directory which store backups file.
+ - `compression`: Compression apply to SQL backup file, 
+                  choose `gzip`, `bzip2` or `xz`, default is `null` (no compression)
 
 ### MySQL
 

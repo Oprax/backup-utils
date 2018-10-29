@@ -1,6 +1,5 @@
 from pathlib import Path
 from datetime import date
-from gzip import compress
 
 from ..DatabaseTask import DatabaseTask
 
@@ -23,8 +22,6 @@ class MysqlDb(DatabaseTask):
             raise ValueError("'{}' file don't exist !".format(extra_file))
         now = str(date.today())
         for db in self._config.get("database", []):
-            bak_name = "{database}-{date}.sql.gz".format(database=db, date=now)
-            bak_file = Path(self.backup_dir) / bak_name
             cmds = [
                 self._cmd,
                 "--defaults-extra-file={}".format(str(extra_file)),
@@ -36,4 +33,5 @@ class MysqlDb(DatabaseTask):
                 db,
             ]
             proc = self._exec(cmds)
-            bak_file.write_bytes(compress(proc.stdout))
+            bak_name = "{database}-{date}.sql".format(database=db, date=now)
+            self.compress(data=proc.stdout, fname=str(Path(self.backup_dir) / bak_name))
