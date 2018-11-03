@@ -1,4 +1,4 @@
-.PHONY: build run test testdev clean install upload
+.PHONY: build run test testdev clean install upload doc
 
 clean:
 	rm -rf src/*.egg-info
@@ -23,3 +23,6 @@ install: clean
 upload: clean
 	cd src && pipenv run python setup.py sdist bdist_wheel
 	pipenv run twine upload src/dist/*
+
+doc:
+	cd docs && pipenv run make html

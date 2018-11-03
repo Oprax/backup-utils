@@ -2,15 +2,15 @@ from pathlib import Path
 
 import setuptools
 
-from backup_utils import __version__, __AUTHOR__
+from backup_utils import __version__, __author__
 
 ROOT = Path(__file__).resolve().parent.parent
 
 setuptools.setup(
     name="backup_utils",
     version=__version__,
-    author=__AUTHOR__.split(" <")[0],
-    author_email=__AUTHOR__.split(" <")[1].strip("<>"),
+    author=__author__.split(" <")[0],
+    author_email=__author__.split(" <")[1].strip("<>"),
     description="The goal of the project is to simplify backup creation.",
     long_description=Path(ROOT / "README.md").read_text(),
     long_description_content_type="text/markdown",

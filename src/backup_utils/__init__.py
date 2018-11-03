@@ -3,7 +3,7 @@ from .Backup import Backup
 
 __all__ = ["Backup", "main"]
 __version__ = "1.0.0-beta"
-__AUTHOR__ = "Oprax <oprax@me.com>"
+__author__ = "Oprax <oprax@me.com>"
 
 
 def main():
@@ -12,7 +12,7 @@ def main():
     """
     parser = argparse.ArgumentParser(description="Process some integers.")
     parser.add_argument(
-        "-v", "--version", action="version", version="%(prog)s " + __version__
+        "-v", "--version", action="version", version="{}".format(__version__)
     )
     parser.add_argument(
         "-r",

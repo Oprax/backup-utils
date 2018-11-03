@@ -10,6 +10,9 @@ __pycache__/
 # Pipenv
 Pipfile.lock
 
+# Sphinx
+docs/.build
+
 # C extensions
 *.so
 
