@@ -15,7 +15,7 @@ def subprocess_run(cmds, *args, **kwargs):
 
 @pytest.yield_fixture()
 def config(tmpdir_factory):
-    db_dir = tmpdir_factory.mktemp("db")
+    db_dir = tmpdir_factory.mktemp("db_bak")
     repo_dir = tmpdir_factory.mktemp("repo")
     yield {
         "repo": str(repo_dir),

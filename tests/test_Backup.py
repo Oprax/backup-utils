@@ -3,7 +3,7 @@ from pathlib import Path
 
 import pytest
 
-from .fixtures import config
+from conftest import config
 
 
 @pytest.yield_fixture()

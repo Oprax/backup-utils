@@ -22,7 +22,7 @@ class BorgTask(Task):
         borg_env["BORG_REPO"] = self._config.get("repo")
 
         compression = self._config.get("compression", "lzma")
-        bak_name = render("::{hostname}-{date}")
+        bak_name = render(self._config.get("name", "::{hostname}-{date}"))
         borg_cmds = [
             self._cmd,
             "create",

@@ -1,6 +1,6 @@
 from unittest.mock import patch, ANY, call
 import pytest
-from ..fixtures import config
+from conftest import config
 
 
 @pytest.yield_fixture()

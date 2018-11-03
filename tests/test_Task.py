@@ -1,7 +1,7 @@
 from subprocess import PIPE
 from unittest.mock import patch
 
-from .fixtures import config, utils_which, subprocess_run
+from conftest import config, utils_which, subprocess_run
 
 
 @patch("subprocess.run", side_effect=subprocess_run)
