@@ -88,18 +88,3 @@ SQL file will be saved.
 
 The other params are depending on the driver. See below for more
 details.
-
-.. _5.-drivers:
-
-5. Drivers
-==========
-
--  `Drivers for Backup`_
--  `Drivers for Sync`_
--  `Drivers for Database`_
--  `Drivers for Notifier`_
-
-.. _Drivers for Backup: src/backup_utils/tasks/README.md
-.. _Drivers for Sync: src/backup_utils/syncs/README.md
-.. _Drivers for Database: src/backup_utils/databases/README.md
-.. _Drivers for Notifier: src/backup_utils/notifiers/README.md
