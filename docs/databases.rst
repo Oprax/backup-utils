@@ -34,22 +34,22 @@ the server! List of all options :
     -  ``name``: Name of the database
 
 Example:
-```
-{
-    "database": {
-        "driver": "postgre",
-        "cmd": "pg_dump",
-        "backup_directory": "/home/backup/databases",
-        "database": [
-            {
-                "user": "supersite",
-                "pswd": "p455w0rd",
-                "name": "supersite_db",
-            }
-        ]
+
+.. code-block:: json
+    {
+        "database": {
+            "driver": "postgre",
+            "cmd": "pg_dump",
+            "backup_directory": "/home/backup/databases",
+            "database": [
+                {
+                    "user": "supersite",
+                    "pswd": "p455w0rd",
+                    "name": "supersite_db",
+                }
+            ]
+        }
     }
-}
-```
 
 Sqlite
 ======
