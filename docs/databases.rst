@@ -20,6 +20,37 @@ the server! List of all options :
 -  ``lock_tables``: boolean for the `--lock-tables`_ options, default :
    ``false``
 
+PostgreSql
+==========
+
+Driver name: ``postgre`` Use ``pg_dump``, make sure it's installed on
+the server! List of all options :
+
+-  ``database``: list of database object to backup with this parameters :
+    -  ``user``: user for database
+    -  ``pswd``: Password for database
+    -  ``host``: Postgres server address, default to ``localhost``
+    -  ``port``: server port, ``5432`` by default.
+    -  ``name``: Name of the database
+
+Example:
+```
+{
+    "database": {
+        "driver": "postgre",
+        "cmd": "pg_dump",
+        "backup_directory": "/home/backup/databases",
+        "database": [
+            {
+                "user": "supersite",
+                "pswd": "p455w0rd",
+                "name": "supersite_db",
+            }
+        ]
+    }
+}
+```
+
 Sqlite
 ======
 
