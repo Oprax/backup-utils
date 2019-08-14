@@ -7,8 +7,8 @@ __pycache__/
 *.py[cod]
 *$py.class
 
-# Pipenv
-Pipfile.lock
+
+requirements.txt
 
 # Sphinx
 docs/.build

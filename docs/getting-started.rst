@@ -33,12 +33,13 @@ You can build the project yourself:
    Process some integers.
 
    optional arguments:
-     -h, --help         show this help message and exit
-     -v, --version      show program's version number and exit
-     -r, --run          Create a new backup, default command if no args has given
-     -n, --notify       Send a notification to test notifier settings
-     -d DIR, --dir DIR  Add a new directory to the backup list, so next run it
-                        will be back up
+    -h, --help         show this help message and exit
+    -v, --version      show program's version number and exit
+    -r, --run          Create a new backup, default command if no args has given
+    -n, --notify       Send a notification to test notifier settings
+    -c, --config       Display path of the settings file
+    -d DIR, --dir DIR  Add a new directory to the backup list, so next run it
+                      will be back up
 
 .. _3.-example:
 

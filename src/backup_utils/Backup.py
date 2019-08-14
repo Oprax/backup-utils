@@ -4,6 +4,8 @@ import subprocess
 from sys import argv
 from pathlib import Path
 
+from appdirs import AppDirs
+
 from .tasks import tasks
 from .syncs import syncs
 from .databases import databases
@@ -21,9 +23,9 @@ class Backup:
 
         .. seealso:: _load_cfg()
         """
-        self._ROOT = Path(argv[0]).resolve().parent
+        self._dirs = AppDirs(appname="bak-utils")
         self._config = {}
-        self._cfg_file = Path("~/.config/bak-utils/config.json").expanduser()
+        self._cfg_file = Path(self._dirs.user_config_dir) / "config.json"
         self._load_cfg()
 
     def _load_cfg(self):
@@ -117,6 +119,9 @@ class Backup:
         driver = notifiers(self._config.get("notifier", {}).get("driver", "email"))
         notifier = driver(**self._config.get("notifier", {}))
         notifier.send(msg, attachments)
+
+    def config(self):
+        print("Current settings file : '{}'".format(self._cfg_file))
 
     def add_dir(self, dirs=[]):
         """

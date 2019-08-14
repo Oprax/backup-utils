@@ -5,7 +5,7 @@ Useful functions needed by the module.
 import os
 import socket
 
-from datetime import date
+from datetime import date, datetime
 from importlib import import_module
 
 
@@ -65,8 +65,11 @@ def render(template):
 
     :Example:
     >>> render("machine-{hostname}-{date}")
+    >>> render("machine-{hostname}-{datetime}") # using ISO format
     """
-    return template.format(hostname=hostname(), date=date.today())
+    return template.format(
+        hostname=hostname(), date=date.today(), datetime=datetime.utcnow().isoformat()
+    )
 
 
 def load(name, pkg="", suffix="Task"):
