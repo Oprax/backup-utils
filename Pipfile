@@ -13,8 +13,4 @@ pytest = "*"
 twine = "*"
 pytest-cov = "*"
 sphinx = "*"
-black = "*"
 shiv = "*"
-
-[pipenv]
-allow_prereleases = true
