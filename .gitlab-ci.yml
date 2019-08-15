@@ -12,6 +12,7 @@ pyz:
     paths:
       - dist/backup_utils.pyz
   before_script:
+    - pipenv install --dev
     - mkdir dist
   script: make build
 
