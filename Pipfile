@@ -4,7 +4,7 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-pip = "==18.0"
+appdirs = "*"
 
 [dev-packages]
 "flake8" = "*"
@@ -13,3 +13,4 @@ pytest = "*"
 twine = "*"
 pytest-cov = "*"
 sphinx = "*"
+shiv = "*"

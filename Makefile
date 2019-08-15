@@ -6,7 +6,9 @@ clean:
 	rm -rf src/build
 
 build: clean
-	pipenv run python -m zipapp -m "backup_utils:main" -p "/usr/bin/env python3" -o ./dist/backup_utils.pyz ./src
+	cp README.md ./src
+	pipenv run shiv --compressed -p "/usr/bin/env python3" -o ./dist/backup_utils.pyz -e backup_utils.main ./src
+	rm ./src/README.md
 
 run: build
 	pipenv run python ./dist/backup_utils.pyz -v

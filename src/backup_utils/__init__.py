@@ -2,7 +2,7 @@ import argparse
 from .Backup import Backup
 
 __all__ = ["Backup", "main"]
-__version__ = "1.1.1"
+__version__ = "1.2.0"
 __author__ = "Oprax <oprax@me.com>"
 
 
@@ -27,6 +27,12 @@ def main():
         help="Send a notification to test notifier settings",
     )
     parser.add_argument(
+        "-c",
+        "--config",
+        action="store_true",
+        help="Display path of the settings file",
+    )
+    parser.add_argument(
         "-d",
         "--dir",
         required=False,
@@ -37,6 +43,8 @@ def main():
     bak = Backup()
     if args.dir:
         bak.add_dir(args.dir)
+    elif args.config:
+        bak.config()
     elif args.notify:
         bak.notify(
             "Hi, your notifier settings is working !",
