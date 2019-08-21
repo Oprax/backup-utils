@@ -10,10 +10,9 @@ pyz:
   artifacts:
     name: "$CI_COMMIT_REF_SLUG"
     paths:
-      - dist/backup_utils.pyz
+      - bin/backup_utils.pyz
   before_script:
     - pipenv install --dev
-    - mkdir dist
   script: make build
 
 .test_template:
