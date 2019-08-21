@@ -3,15 +3,19 @@
 clean:
 	rm -rf src/*.egg-info
 	rm -rf src/dist
+	rm -rf src/bin
 	rm -rf src/build
 
 build: clean
-	cp README.md ./src
-	pipenv run shiv --compressed -p "/usr/bin/env python3" -o ./dist/backup_utils.pyz -e backup_utils.main ./src
-	rm ./src/README.md
+	pipenv lock -r > requirements.txt
+	pipenv run pip install -r requirements.txt --target dist/
+	cp README.md dist/
+	cp -a ./src/. ./dist/
+	mkdir -p bin
+	pipenv run shiv --site-packages dist --compressed -p "/usr/bin/env python3" -o ./bin/backup_utils.pyz -e backup_utils.main
 
 run: build
-	pipenv run python ./dist/backup_utils.pyz -v
+	pipenv run python ./bin/backup_utils.pyz -v
 
 test:
 	PYTHONPATH="${PYTHONPATH}:${PWD}/src" pipenv run pytest --cov=backup_utils
