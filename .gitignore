@@ -9,7 +9,6 @@ __pycache__/
 
 
 requirements.txt
-Pipfile.lock
 
 # Sphinx
 docs/.build

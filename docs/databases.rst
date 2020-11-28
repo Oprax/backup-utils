@@ -36,6 +36,7 @@ the server! List of all options :
 Example:
 
 .. code-block:: json
+
     {
         "database": {
             "driver": "postgre",
