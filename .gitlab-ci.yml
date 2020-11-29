@@ -12,12 +12,12 @@ pyz:
     paths:
       - bin/backup_utils.pyz
   before_script:
-    - pipenv install --dev
+    - poetry install --dev
   script: make build
 
 .test_template:
   before_script:
-    - pipenv install --dev
+    - poetry install --dev
   script: make test
 
 python3.5:
@@ -40,5 +40,5 @@ pypi:
   only:
    - master
   before_script:
-   - pipenv install --dev
+   - poetry install --dev
   script: make upload
