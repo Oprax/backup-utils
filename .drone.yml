@@ -1,0 +1,42 @@
+---
+kind: pipeline
+type: docker
+name: default
+
+workspace:
+  path: /drone/src
+
+steps:
+- name: test-3.6
+  image: registry.oprax.fr/python:3.6-poetry
+  commands:
+    - poetry install --no-interaction --no-ansi
+    - make test
+- name: test-3.7
+  image: registry.oprax.fr/python:3.7-poetry
+  commands:
+    - poetry install --no-interaction --no-ansi
+    - make test
+- name: test-3.8
+  image: registry.oprax.fr/python:3.8-poetry
+  commands:
+    - poetry install --no-interaction --no-ansi
+    - make test
+- name: test-3.9
+  image: registry.oprax.fr/python:3.9-poetry
+  commands:
+    - poetry install --no-interaction --no-ansi
+    - make test
+- name: publish
+  image: registry.oprax.fr/python:3-poetry
+  environment:
+    TWINE_PASSWORD:
+      from_secret: TWINE_PASSWORD
+    TWINE_USERNAME:
+      from_secret: TWINE_USERNAME
+  commands:
+    - poetry install --no-interaction --no-ansi
+    - make upload
+  when:
+    branch:
+      - master
