@@ -3,6 +3,9 @@ kind: pipeline
 type: docker
 name: default
 
+workspace:
+  path: /opt/pysetup
+
 steps:
 - name: test-3.6
   image: registry.oprax.fr/python:3.6-poetry
