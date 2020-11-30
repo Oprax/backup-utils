@@ -11,28 +11,28 @@ steps:
   image: registry.oprax.fr/python:3.6-poetry
   commands:
     - python -m ensurepip --default-pip
-    - python -m venv .venv
+    - python -m venv $VENV_PATH
     - poetry install --no-interaction
     - make test
 - name: test-3.7
   image: registry.oprax.fr/python:3.7-poetry
   commands:
     - python -m ensurepip --default-pip
-    - python -m venv .venv
+    - python -m venv $VENV_PATH
     - poetry install --no-interaction
     - make test
 - name: test-3.8
   image: registry.oprax.fr/python:3.8-poetry
   commands:
     - python -m ensurepip --default-pip
-    - python -m venv .venv
+    - python -m venv $VENV_PATH
     - poetry install --no-interaction
     - make test
 - name: test-3.9
   image: registry.oprax.fr/python:3.9-poetry
   commands:
     - python -m ensurepip --default-pip
-    - python -m venv .venv
+    - python -m venv $VENV_PATH
     - poetry install --no-interaction
     - make test
 - name: publish
@@ -44,7 +44,7 @@ steps:
       from_secret: TWINE_USERNAME
   commands:
     - python -m ensurepip --default-pip
-    - python -m venv .venv
+    - python -m venv $VENV_PATH
     - poetry install --no-interaction
     - make upload
   when:
