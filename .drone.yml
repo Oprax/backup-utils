@@ -11,25 +11,25 @@ steps:
   image: registry.oprax.fr/python:3.6-poetry
   pull: always
   commands:
-    - poetry install --no-interaction
+    - poetry install
     - make test
 - name: test-3.7
   image: registry.oprax.fr/python:3.7-poetry
   pull: always
   commands:
-    - poetry install --no-interaction
+    - poetry install
     - make test
 - name: test-3.8
   image: registry.oprax.fr/python:3.8-poetry
   pull: always
   commands:
-    - poetry install --no-interaction
+    - poetry install
     - make test
 - name: test-3.9
   image: registry.oprax.fr/python:3.9-poetry
   pull: always
   commands:
-    - poetry install --no-interaction
+    - poetry install
     - make test
 - name: publish
   image: registry.oprax.fr/python:3-poetry
@@ -40,7 +40,7 @@ steps:
     TWINE_USERNAME:
       from_secret: TWINE_USERNAME
   commands:
-    - poetry install --no-interaction
+    - poetry install
     - make upload
   when:
     branch:
