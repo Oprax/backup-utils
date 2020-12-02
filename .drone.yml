@@ -13,6 +13,8 @@ steps:
   environment:
     POETRY_VIRTUALENVS_CREATE: "true"
   commands:
+    - python -m ensurepip --default-pip
+    - python -m venv $VENV_PATH
     - $VENV_PATH/bin/pip install -U pip
     - poetry install
     - make test
@@ -22,6 +24,8 @@ steps:
   environment:
     POETRY_VIRTUALENVS_CREATE: "true"
   commands:
+    - python -m ensurepip --default-pip
+    - python -m venv $VENV_PATH
     - $VENV_PATH/bin/pip install -U pip
     - poetry install
     - make test
@@ -31,6 +35,8 @@ steps:
   environment:
     POETRY_VIRTUALENVS_CREATE: "true"
   commands:
+    - python -m ensurepip --default-pip
+    - python -m venv $VENV_PATH
     - $VENV_PATH/bin/pip install -U pip
     - poetry install
     - make test
@@ -40,6 +46,8 @@ steps:
   environment:
     POETRY_VIRTUALENVS_CREATE: "true"
   commands:
+    - python -m ensurepip --default-pip
+    - python -m venv $VENV_PATH
     - $VENV_PATH/bin/pip install -U pip
     - poetry install
     - make test
