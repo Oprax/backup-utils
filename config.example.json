@@ -29,6 +29,7 @@
         "extra_file": "~/.my.cnf",
         "backup_directory": "/home/backup/databases",
         "lock_tables": false,
+        "docker_container_name": "^postgis",
         "database": []
     }
 }

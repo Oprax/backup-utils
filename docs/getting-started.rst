@@ -81,6 +81,9 @@ shell command.
 For the moment there are ``pre_hook`` and ``post_hook`` which is
 executed before and after each task.
 
+In each task you can specify a ``docker_container_name``,
+which corresponds to a regex and allows to run the task in a container docker (already running).
+
 If there is no ``database`` key in the config file, this task will be
 skipped.
 
