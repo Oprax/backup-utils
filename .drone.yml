@@ -1,0 +1,93 @@
+---
+kind: pipeline
+type: docker
+name: default
+
+workspace:
+  path: /opt/pysetup
+
+steps:
+- name: test-3.6
+  image: registry.oprax.fr/python:3.6-poetry
+  pull: always
+  environment:
+    POETRY_VIRTUALENVS_CREATE: "true"
+  commands:
+    - python -m ensurepip --default-pip
+    - python -m venv $VENV_PATH
+    - $VENV_PATH/bin/pip install -U pip
+    - poetry install
+    - make test
+- name: test-3.7
+  image: registry.oprax.fr/python:3.7-poetry
+  pull: always
+  environment:
+    POETRY_VIRTUALENVS_CREATE: "true"
+  commands:
+    - python -m ensurepip --default-pip
+    - python -m venv $VENV_PATH
+    - $VENV_PATH/bin/pip install -U pip
+    - poetry install
+    - make test
+- name: test-3.8
+  image: registry.oprax.fr/python:3.8-poetry
+  pull: always
+  environment:
+    POETRY_VIRTUALENVS_CREATE: "true"
+  commands:
+    - python -m ensurepip --default-pip
+    - python -m venv $VENV_PATH
+    - $VENV_PATH/bin/pip install -U pip
+    - poetry install
+    - make test
+- name: test-3.9
+  image: registry.oprax.fr/python:3.9-poetry
+  pull: always
+  environment:
+    POETRY_VIRTUALENVS_CREATE: "true"
+  commands:
+    - python -m ensurepip --default-pip
+    - python -m venv $VENV_PATH
+    - $VENV_PATH/bin/pip install -U pip
+    - poetry install
+    - make test
+- name: publish-download
+  image: registry.oprax.fr/python:3-poetry
+  pull: always
+  environment:
+    AUTH:
+      from_secret: auth
+    FILE_BIN:
+      from_secret: file_bin
+  commands:
+    - poetry install
+    - make uploadbin
+  when:
+    branch:
+      - master
+- name: publish-pypi
+  image: registry.oprax.fr/python:3-poetry
+  pull: always
+  environment:
+    TWINE_PASSWORD:
+      from_secret: TWINE_PASSWORD
+    TWINE_USERNAME:
+      from_secret: TWINE_USERNAME
+  commands:
+    - poetry install
+    - make upload
+  when:
+    branch:
+      - master
+- name: publish-docker
+  image: plugins/docker
+  settings:
+    username:
+      from_secret: docker_username
+    password:
+      from_secret: docker_password
+    repo: oprax/backup-utils
+    auto_tag: true
+  when:
+    branch:
+      - master

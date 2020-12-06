@@ -1,34 +1,38 @@
-.PHONY: build run test testdev clean install upload doc
+.PHONY: build run test testdev clean install upload doc uploadbin
 
 clean:
 	rm -rf src/*.egg-info
 	rm -rf src/dist
-	rm -rf src/bin
+	rm -rf ./dist
+	rm -rf ./bin
 	rm -rf src/build
 
 build: clean
-	pipenv lock -r > requirements.txt
-	pipenv run pip install -r requirements.txt --target dist/
+	poetry export -f requirements.txt -o requirements.txt
+	poetry run pip install -r requirements.txt --target dist/
 	cp README.md dist/
 	cp -a ./src/. ./dist/
 	mkdir -p bin
-	pipenv run shiv --site-packages dist --compressed -p "/usr/bin/env python3" -o ./bin/backup_utils.pyz -e backup_utils.main
+	poetry run shiv --site-packages dist --compressed -p "/usr/bin/env python3" -o ./bin/backup_utils.pyz -e backup_utils.main
 
 run: build
-	pipenv run python ./bin/backup_utils.pyz -v
+	poetry run python ./bin/backup_utils.pyz -v
 
 test:
-	PYTHONPATH="${PYTHONPATH}:${PWD}/src" pipenv run pytest --cov=backup_utils
+	PYTHONPATH="${PYTHONPATH}:${PWD}/src" poetry run pytest --cov=backup_utils
 
 testdev:
-	PYTHONPATH="${PYTHONPATH}:${PWD}/src" pipenv run pytest -s -x
+	PYTHONPATH="${PYTHONPATH}:${PWD}/src" poetry run pytest -s -x
 
 install: clean
-	cd src && pipenv run python setup.py install
+	cd src && poetry run python setup.py install
 
 upload: clean
-	cd src && pipenv run python setup.py sdist bdist_wheel
-	pipenv run twine upload src/dist/*
+	cd src && poetry run python setup.py sdist bdist_wheel
+	poetry run twine upload src/dist/*
+
+uploadbin: build
+	./upload-bin.sh
 
 doc:
-	cd docs && pipenv run make html
+	cd docs && poetry run make html

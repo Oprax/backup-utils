@@ -25,7 +25,7 @@ from backup_utils import __version__, __author__
 
 project = "backup-utils"
 author = __author__.split(" <")[0]
-copyright = "2018, " + author
+copyright = "2020, " + author
 
 # The short X.Y version
 version = __version__.split("-")[0]
@@ -88,7 +88,7 @@ html_theme = "alabaster"
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
-html_static_path = [".static"]
+html_static_path = []
 
 # Custom sidebar templates, must be a dictionary that maps document names
 # to template names.

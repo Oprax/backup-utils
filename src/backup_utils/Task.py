@@ -1,4 +1,6 @@
 import subprocess
+import re
+import docker
 from .utils import which
 
 
@@ -24,11 +26,20 @@ class Task(object):
 
         .. seealso:: which()
         """
-        self._config = kwargs
+        self._container = None
+        self._config = dict(kwargs)
         cmd = self._config.get("cmd", self.default_cmd)
-        self._cmd = which(cmd)
-        if not self._cmd:
-            raise ValueError("Can't find '{}' binary".format(cmd))
+        container_name = self._config.get("docker_container_name", None)
+        if container_name is not None:
+            client = docker.from_env()
+            for container in client.containers.list():
+                if re.match(container_name, container.name):
+                    self._container = container
+                    break
+        else:
+            self._cmd = which(cmd)
+            if not self._cmd:
+                raise ValueError("Can't find '{}' binary".format(cmd))
 
     def _exec(self, cmds, env=None):
         """
@@ -43,6 +54,11 @@ class Task(object):
 
         .. seealso:: subprocess.run()
         """
+        if self._container is not None:
+            exit_code, output = self._container.exec_run(cmds, demux=True)
+            return subprocess.CompletedProcess(
+                cmds, exit_code, stdout=output[0], stderr=output[1]
+            )
         return subprocess.run(
             cmds, env=env, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE
         )
@@ -55,12 +71,12 @@ class Task(object):
         :type hook_name: str
         """
         if hook_name in self._config.keys():
-            hook = which(self._config[hook_name])
-            if not hook:
+            hook_bin = which(self._config[hook_name])
+            if not hook_bin:
                 raise ValueError(
-                    "Can't find '{}' binary for {} hook".format(hook, hook_name)
+                    "Can't find '{}' binary for {} hook".format(hook_bin, hook_name)
                 )
-            self._exec(hook)
+            self._exec(hook_bin)
 
     def _run(self):
         """
