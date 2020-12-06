@@ -15,7 +15,7 @@ Welcome to backup-utils's documentation!
    syncs
    databases
    notifiers
-
+   docker
 
 
 Indices and tables

@@ -1,4 +1,4 @@
-.PHONY: build run test testdev clean install upload doc
+.PHONY: build run test testdev clean install upload doc uploadbin
 
 clean:
 	rm -rf src/*.egg-info
@@ -30,6 +30,9 @@ install: clean
 upload: clean
 	cd src && poetry run python setup.py sdist bdist_wheel
 	poetry run twine upload src/dist/*
+
+uploadbin: build
+	./upload-bin.sh
 
 doc:
 	cd docs && poetry run make html

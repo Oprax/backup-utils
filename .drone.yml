@@ -51,7 +51,21 @@ steps:
     - $VENV_PATH/bin/pip install -U pip
     - poetry install
     - make test
-- name: publish
+- name: publish-download
+  image: registry.oprax.fr/python:3-poetry
+  pull: always
+  environment:
+    AUTH:
+      from_secret: auth
+    FILE_BIN:
+      from_secret: file_bin
+  commands:
+    - poetry install
+    - make uploadbin
+  when:
+    branch:
+      - master
+- name: publish-pypi
   image: registry.oprax.fr/python:3-poetry
   pull: always
   environment:
@@ -62,6 +76,18 @@ steps:
   commands:
     - poetry install
     - make upload
+  when:
+    branch:
+      - master
+- name: publish-docker
+  image: plugins/docker
+  settings:
+    username:
+      from_secret: docker_username
+    password:
+      from_secret: docker_password
+    repo: oprax/backup-utils
+    auto_tag: true
   when:
     branch:
       - master
