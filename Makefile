@@ -28,8 +28,7 @@ install: clean
 	cd src && poetry run python setup.py install
 
 upload: clean
-	cd src && poetry run python setup.py sdist bdist_wheel
-	poetry run twine upload src/dist/*
+	poetry publish --build 
 
 uploadbin: build
 	./upload-bin.sh
