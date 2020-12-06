@@ -2,7 +2,7 @@ import argparse
 from .Backup import Backup
 
 __all__ = ["Backup", "main"]
-__version__ = "2.1.1"
+__version__ = "2.1.2"
 __author__ = "Oprax <oprax@me.com>"
 
 
