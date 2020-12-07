@@ -55,6 +55,7 @@ steps:
     - $VENV_PATH/bin/pip install -U pip
     - poetry install
     - make test
+    - apt install -y git
     - curl -s https://codecov.io/bash | bash -s - -t $CODECOV_TOKEN
 - name: publish-download
   image: registry.oprax.fr/python:3-poetry
