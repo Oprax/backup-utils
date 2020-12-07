@@ -20,7 +20,6 @@ steps:
     - $VENV_PATH/bin/pip install -U pip
     - poetry install
     - make test
-    - bash <(curl -s https://codecov.io/bash)
 - name: test-3.7
   image: registry.oprax.fr/python:3.7-poetry
   pull: always
