@@ -12,6 +12,8 @@ steps:
   pull: always
   environment:
     POETRY_VIRTUALENVS_CREATE: "true"
+    CODECOV_TOKEN:
+      from_secret: codecov_token
   commands:
     - python -m ensurepip --default-pip
     - python -m venv $VENV_PATH
@@ -45,12 +47,16 @@ steps:
   pull: always
   environment:
     POETRY_VIRTUALENVS_CREATE: "true"
+    CODECOV_TOKEN:
+      from_secret: codecov_token
   commands:
     - python -m ensurepip --default-pip
     - python -m venv $VENV_PATH
     - $VENV_PATH/bin/pip install -U pip
     - poetry install
     - make test
+    - apt install -y git
+    - curl -s https://codecov.io/bash | bash -s - -t $CODECOV_TOKEN
 - name: publish-download
   image: registry.oprax.fr/python:3-poetry
   pull: always
