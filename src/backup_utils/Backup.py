@@ -1,7 +1,6 @@
 import json
 import subprocess
 
-from sys import argv
 from pathlib import Path
 
 from appdirs import AppDirs
@@ -61,29 +60,38 @@ class Backup:
         Fetch the database driver and launch the task.
         """
         driver = databases(self._config.get("database", {}).get("driver", "mysql"))
-        task = driver(repo=str(self._repo), **self._config.get("database", {}))
-        task.start()
-        self._config.get("directories", []).append(task.backup_dir)
+        self._database_task = driver(
+            repo=str(self._repo), **self._config.get("database", {})
+        )
+        self._database_task.start()
+        self._config.get("directories", []).append(self._database_task.backup_dir)
 
     def _backup(self):
         """
         Fetch the backup driver and launch the task.
         """
         driver = tasks(self._config.get("backup", {}).get("driver", "Borg"))
-        task = driver(
+        self._backup_task = driver(
             directories=self._config.get("directories", []),
             repo=str(self._repo),
             **self._config.get("backup", {})
         )
-        task.start()
+        self._backup_task.start()
 
     def _sync(self):
         """
         Fetch the sync driver and launch the task.
         """
         driver = syncs(self._config.get("sync", {}).get("driver", "Rclone"))
-        sync = driver(repo=str(self._repo), **self._config.get("sync", {}))
-        sync.start()
+        self._sync_task = driver(repo=str(self._repo), **self._config.get("sync", {}))
+        self._sync_task.start()
+
+    def _clean(self):
+        """
+        Clean files after backups
+        """
+        if self._config.get("database", None):
+            self._database_task.clean()
 
     def run(self):
         """
@@ -97,6 +105,8 @@ class Backup:
                 self._database()
             self._backup()
             self._sync()
+            if self._config.get("clean", None):
+                self._clean()
         except subprocess.CalledProcessError as e:
             err = "Process fail, command : '{}'".format(" ".join(e.cmd))
             files = {"stdout.log": e.stdout, "stderr.log": e.stderr}
@@ -117,8 +127,8 @@ class Backup:
         :type attachments: dict
         """
         driver = notifiers(self._config.get("notifier", {}).get("driver", "email"))
-        notifier = driver(**self._config.get("notifier", {}))
-        notifier.send(msg, attachments)
+        self._notify_task = driver(**self._config.get("notifier", {}))
+        self._notify_task.send(msg, attachments)
 
     def config(self):
         print("Current settings file : '{}'".format(self._cfg_file))

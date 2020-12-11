@@ -1,6 +1,7 @@
 {
     "directories": [],
     "repo": "/home/backup/repo",
+    "clean": true,
     "backup": {
         "cmd": "borg",
         "driver": "borg",
