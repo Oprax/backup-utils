@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "backup-utils"
-version = "2.1.4"
+version = "2.2.0"
 description = "The goal of the project is to simplify backup creation."
 authors = ["Romain Muller <com@oprax.fr>"]
 license = "MIT"
@@ -26,6 +26,7 @@ classifiers = [
 python = "^3.6"
 appdirs = "^1.4.4"
 docker = "^4.4.0"
+nexmo = "^2.5.2"
 
 [tool.poetry.dev-dependencies]
 flake8 = "^3.8.4"
