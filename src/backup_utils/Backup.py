@@ -123,7 +123,7 @@ class Backup:
 
         for config in configs:
             driver = notifiers(config.get("driver", "print"))
-            notifier = driver(**self._config.get("notifier", {}))
+            notifier = driver(**config)
             notifier.send(msg, attachments)
 
     def config(self):
