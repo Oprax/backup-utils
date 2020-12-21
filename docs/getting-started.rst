@@ -71,6 +71,9 @@ Root object:
    ``--dir`` command to add a new directory.
 -  ``repo``: The directory containing the backup and that will be
    synchronized to a remote server.
+-  ``clean``: Boolean to indicate if a cleanup is necessary after backup.
+   For the moment, the database folder is emptied of SQL files,
+   since they are no longer saved and no longer needed.
 -  ``backup``, ``sync``, ``database`` and ``notifier`` : are tasks
    objects.
 
