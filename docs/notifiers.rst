@@ -2,6 +2,9 @@
  List of drivers for Notifier
 ==============================
 
+.. note::
+    You can specify a configuration list to send the notification through multiple notifiers.
+
 Print
 =====
 
@@ -20,3 +23,23 @@ date as a variable.
 -  ``port``: SMTP port, ``587`` by default.
 -  ``login``: User login for SMTP
 -  ``pswd``: Password for SMTP
+
+
+Vonage SMS
+==========
+
+Driver name : ``vonage``
+
+Use `Vonage <https://www.vonage.com/communications-apis/sms/>`_ API to send an SMS.
+
+.. warning::
+    Attachments cannot be sent by SMS.
+    You can combine multiple notifiers with e.g. SMS and email.
+    This way you will be notified by SMS and find the logs in the email.
+
+List of all options :
+
+-  ``from``: name of the send, default is ``BackupUtils``
+-  ``to``: phone number of the recipient, use E.164 format without leading +.
+-  ``vonage_key``: Vonage API key
+-  ``vonage_secret``: Vonage API secret key

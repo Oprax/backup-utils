@@ -126,9 +126,15 @@ class Backup:
         :type msg: str
         :type attachments: dict
         """
-        driver = notifiers(self._config.get("notifier", {}).get("driver", "email"))
-        self._notify_task = driver(**self._config.get("notifier", {}))
-        self._notify_task.send(msg, attachments)
+        configs = self._config.get("notifier", {})
+
+        if isinstance(configs, dict):
+            configs = [configs]
+
+        for config in configs:
+            driver = notifiers(config.get("driver", "print"))
+            notifier = driver(**config)
+            notifier.send(msg, attachments)
 
     def config(self):
         print("Current settings file : '{}'".format(self._cfg_file))
