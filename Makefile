@@ -19,7 +19,7 @@ run: build
 	poetry run python ./bin/backup_utils.pyz -v
 
 test:
-	PYTHONPATH="${PYTHONPATH}:${PWD}/src" poetry run pytest --cov=backup_utils
+	PYTHONPATH="${PYTHONPATH}:${PWD}/src" poetry run pytest --cov-report=xml --cov=backup_utils
 
 testdev:
 	PYTHONPATH="${PYTHONPATH}:${PWD}/src" poetry run pytest -s -x
