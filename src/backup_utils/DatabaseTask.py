@@ -50,3 +50,8 @@ class DatabaseTask(Task):
             cp_mod = import_module(cp_name)
             with open(fname + ext, "wb") as f:
                 f.write(cp_mod.compress(data))
+
+    def clean(self):
+        for child_file in self._bak_dir.iterdir():
+            if child_file.is_file():
+                child_file.unlink()
