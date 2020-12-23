@@ -35,6 +35,6 @@ class SlackNotifier(Notifier):
                 }
             )
         requests.post(
-            self._config.get("slack_url"),
+            self._config.get("webhook_url"),
             json={"blocks": blocks},
         )
