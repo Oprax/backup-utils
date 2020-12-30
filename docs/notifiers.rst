@@ -43,3 +43,18 @@ List of all options :
 -  ``to``: phone number of the recipient, use E.164 format without leading +.
 -  ``vonage_key``: Vonage API key
 -  ``vonage_secret``: Vonage API secret key
+
+
+Slack Webhook
+=============
+
+Driver name : ``slack``
+
+Use `Slack <https://api.slack.com/tutorials/slack-apps-hello-world>`_ webhook to send a message.
+
+.. warning::
+    Attachments are decoded as UTF-8 text, if the attachment is illegible it is because it does not conform to UTF-8.
+
+List of all options :
+
+-  ``webhook_url``: webhook URL where the message will be sent.
