@@ -66,24 +66,22 @@ class SignalCli:
         if not self._user or not REGEX_E164.match(self._user):
             raise ValueError("Given user must be a valid E.164 phone number !")
 
-    def send(self, recipient, message, attachments={}):
+    def send(self, recipient, message, attachments=[]):
         self._check_user()
-        if not recipient or not REGEX_E164.match(recipient):
-            raise ValueError("Given recipient must be a valid E.164 phone number !")
-        result = None
-        with tempfile.TemporaryDirectory(prefix="backup-utils-") as tmpdirname:
-            cmd = ["-u", self._user, "send", "-m", message, recipient]
-            if len(attachments):
-                tmpdir = Path(tmpdirname)
-                for filename, content in attachments.items():
-                    if isinstance(content, str):
-                        cmd += ["--attachment", content]
-                    elif isinstance(content, bytes):
-                        attachment = tmpdir / filename
-                        attachment.write_bytes(content)
-                        cmd += ["--attachment", str(attachment)]
-            result = self._run(cmd)
-        return result
+        if not recipient:
+            raise ValueError("Given recipient must be a valid E.164 phone number or a group name !")
+
+        cmd = ["-u", self._user, "send", "-m", message]
+        if REGEX_E164.match(recipient):
+            cmd += [recipient]
+        else:
+            raise ValueError("Given recipient must be a valid E.164 phone number or a group name !")
+            # group not working for the moment
+            # cmd += ["--group", recipient]
+
+        for filename in attachments:
+            cmd += ["--attachment", filename]
+        return self._run(cmd)
 
     def register(self):
         self._check_user()
