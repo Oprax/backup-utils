@@ -51,9 +51,13 @@ class Backup:
         """
         Check there are no missing settings.
         """
-        self._repo = Path(self._config.get("repo", ""))
+        repo = self._config.get("repo", None)
+        if repo is None:
+            raise ValueError("Repository must be defined !".format(self._repo))
+        self._repo = Path(repo)
+        # if not a directory, it can be a remote borg repo
         if not self._repo.is_dir():
-            raise ValueError("'{}' is not a directory !".format(self._repo))
+            self._repo = repo
 
     def _database(self):
         """
@@ -104,7 +108,8 @@ class Backup:
             if self._config.get("database", None):
                 self._database()
             self._backup()
-            self._sync()
+            if self._config.get("sync", None):
+                self._sync()
             if self._config.get("clean", None):
                 self._clean()
         except subprocess.CalledProcessError as e:

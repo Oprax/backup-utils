@@ -5,7 +5,7 @@ Useful functions needed by the module.
 import os
 import socket
 
-from datetime import date, datetime
+from datetime import datetime
 from importlib import import_module
 
 
@@ -64,8 +64,9 @@ def render(template):
     >>> render("machine-{hostname}-{date}")
     >>> render("machine-{hostname}-{datetime}") # using ISO format
     """
+    now = datetime.utcnow()
     return template.format(
-        hostname=hostname(), date=date.today(), datetime=datetime.utcnow().isoformat()
+        hostname=hostname(), date=now.strftime("%d-%m-%Y"), datetime=now.strftime("%d-%m-%Y_%H-%M-%S")
     )
 
 

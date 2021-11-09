@@ -2,8 +2,8 @@ import argparse
 from .Backup import Backup
 
 __all__ = ["Backup", "main"]
-__version__ = "2.5.0"
-__author__ = "Oprax <oprax@me.com>"
+__version__ = "2.5.1"
+__author__ = "Oprax <com@oprax.fr>"
 
 
 def main():
