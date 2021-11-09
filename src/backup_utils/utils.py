@@ -66,7 +66,7 @@ def render(template):
     """
     now = datetime.utcnow()
     return template.format(
-        hostname=hostname(), date=now.strftime("%d-%m-%Y"), datetime=now.strftime("%d-%m-%Y_%H-%M-%S")
+        hostname=hostname(), date=now.strftime("%Y-%m-%d"), datetime=now.strftime("%Y-%m-%d_%H-%M-%S")
     )
 
 

@@ -71,6 +71,9 @@ steps:
   when:
     branch:
       - master
+    event:
+      exclude:
+      - pull_request
 - name: publish-docker
   image: plugins/docker
   settings:
@@ -83,6 +86,9 @@ steps:
   when:
     branch:
       - master
+    event:
+      exclude:
+      - pull_request
 - name: publish-pypi
   image: registry.oprax.fr/python:3-poetry
   pull: always
@@ -95,3 +101,6 @@ steps:
   when:
     branch:
       - master
+    event:
+      exclude:
+      - pull_request
